@@ -7,20 +7,24 @@ addpath('matlabPyrTools')
 %------------------------------------------------------------
 % input/output
 
+input_video = '8_sec_no_movement_mp4.mp4';
+% input_video = '8_sec_no_movement_mov.mov';
+
 data_dir = '../videos/dave';
 results_dir = '../videos/output';
-input_video = '8_sec_no_movement.mp4';
 input_video_path = fullfile(data_dir, input_video);
 
 %------------------------------------------------------------
 % magical params
 
-pulse_estimate = 23*3; % count the number of pules you have for 20 sec then * 3
-
+pulse_estimate = 23*3;  % count the number of pules you have for 20 sec then * 3
+window_size = 3;        % expands frequency range by 2x: lower_lim - x, upper_lim + x Hz
+                        % 2: nothing happens, 2.5: nothing happens, 2.8: does nothing, 3: works great, 4: very pronounced
+                        
 alpha = 50;
 level = 4;
-fl = (pulse_estimate-2)/60; % low freq
-fh = (pulse_estimate+2)/60; % high freq
+fl = (pulse_estimate-window_size)/60; % low freq
+fh = (pulse_estimate+window_size)/60; % high freq
 samplingRate = 30;
 chromAttenuation = 1;
 
