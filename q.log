@@ -1,0 +1,28 @@
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=latex 2012.8.7)  3 NOV 2013 19:00
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**q
+(/usr/local/texlive/2012basic/texmf-dist/tex/latex/tools/q.tex
+LaTeX2e <2011/06/27>
+Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, ba
+sque, danish, dutch, ukenglish, usenglishmax, finnish, french, german, ngerman,
+ swissgerman, hungarian, italian, bokmal, nynorsk, polish, portuguese, spanish,
+ swedish, loaded.
+File ignored
+)
+! Emergency stop.
+<*> q
+     
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 6 strings out of 494579
+ 268 string characters out of 3168598
+ 45826 words of memory out of 3000000
+ 3329 multiletter control sequences out of 15000+200000
+ 3640 words of font info for 14 fonts, out of 3000000 for 9000
+ 314 hyphenation exceptions out of 8191
+ 5i,0n,1p,81b,8s stack positions out of 5000i,500n,10000p,200000b,50000s
+No pages of output.

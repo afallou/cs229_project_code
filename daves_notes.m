@@ -36,3 +36,22 @@ samplingRate = samplingRate
 3. height, width, nChannels
 
 
+% -----------------------------------------------------------------------------
+
+% example pulseox data, sampled at 125 Hz, units are scaled to range from 0 to 1023
+http://bsp.pdx.edu/Data/TBI_PLETH.zip
+
+% extract the first 500KB to a text file
+head -c 500000 TBI_PLETH.txt >> pulseox.txt
+
+% read data
+po_raw = textread('pulseox.txt');
+ps = po_raw(4000:5999);
+plot(ps)
+[cA,cD] = dwt(ps, 'haar');
+
+[S,F,T,P] = spectrogram(ps,256,250,256,125);
+surf(T,F,10*log10(P),'edgecolor','none'); axis tight; 
+view(0,90);
+xlabel('Time (Seconds)'); ylabel('Hz');
+
