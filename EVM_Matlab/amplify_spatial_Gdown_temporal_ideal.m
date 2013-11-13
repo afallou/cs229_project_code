@@ -12,7 +12,7 @@
 % License: Please refer to the LICENCE file
 % Date: June 2012
 %
-function amplify_spatial_Gdown_temporal_ideal(vidFile,outDir,alpha,level, ...
+function [filtered_stack] = amplify_spatial_Gdown_temporal_ideal(vidFile,outDir,alpha,level, ...
                      fl,fh,samplingRate, chromAttenuation)
     % fl: lower cutoff frequency of ideal band pass filter
     % fh: higher cutoff frequency of ideal band pass filter
