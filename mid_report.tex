@@ -153,12 +153,21 @@ We believe these two ideas imply that there is information present in the video 
   Thus, while the EVM processing strikingly shows that it is possible to extract medically relevant data from a simple video, we also realized that processing had too many 
   unknown effects for us to get started by directly adding new layers on top of it. Thus we decided to start building from the ground up.
 
-  Another question that arose from this visualization was whether or not it would be necessary to use some face detection tool in order to be able to look at the 'right' pixels (those with a heartbeat). We then realized we had actually had a wrong definition of our problem, up until then.
+  Another question that arose from this visualization was whether or not it would be necessary to use some face detection tool 
+  in order to be able to look at the 'right' pixels (those with a heartbeat). We then realized we had actually 
+  had a wrong definition of our problem, up until then.
 
   What we are essentially trying to do is to get the same reading a pulse oximeter, but with a camera.
-  An transmittance pulse oximeter measures the absorption of light by a thin layer of tissue through time. Because oxygenated and de-oxygenated hemoglobin do not absorb light at the same wavelength, this measure yields the blood's oxygen saturation, And by measuring the periodic change of absorbance caused by the pulse, the same measure also yields a heartbeat reading.
+  An transmittance pulse oximeter measures the absorption of light by a thin layer of 
+  tissue through time. Because oxygenated and de-oxygenated hemoglobin do not absorb light 
+  at the same wavelength, this measure yields the blood's oxygen saturation, And by measuring the 
+  periodic change of absorbance caused by the pulse, the same measure also yields a heartbeat reading.
 
-  Thus, we could see our experiment as one big pulse oximeter. The room is our light source, the camera our sensor. It happens that we have a video of a whole face, instead we could have only one pixel of the whole video and the concept would still work. With that different view, our problem changes, and the difficulty comes from the fact that we do not know much about either our light source or our sensors.
+  Thus, we could see our experiment as one big pulse oximeter. The room is our light source, 
+  the camera our sensor. It happens that we have a video of a whole face, instead we could 
+  have only one pixel of the whole video and the concept would still work. 
+  With that different view, our problem changes, and the difficulty comes from the 
+  fact that we do not know much about either our light source or our sensors.
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
