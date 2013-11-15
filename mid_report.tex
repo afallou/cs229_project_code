@@ -48,6 +48,8 @@
 \setlength\textheight{648pt}
 
 \setlength{\tabcolsep}{8pt}
+
+\setlength{\parindent}{1cm}
 \renewcommand{\arraystretch}{1.2}
 % big-O notation
 \newcommand{\bigO}[1]{\ensuremath{\mathop{}\mathopen{}\mathcal{O}\mathopen{}\left(#1\right)}}
@@ -95,7 +97,7 @@
   \thispagestyle{empty}
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\large Introduction \\
+\section*{Introduction}
 %
 \small Recent advances in mobile computing power have opened up myriad of possibilities in continuous monitoring of health. 
 This, combined with the camera faculty available in most smartphones has enabled heart rate detection from mobile phone video. 
@@ -116,34 +118,6 @@ We intend to look for this change too.
 We believe these two ideas imply that there is information present in the video to reconstruct the pulse oximeter waveform.\\
 \\
 \\
-\\ % Left space for Adrien's bit
-\\
-\large Gathering the data \\
-\small For each video, we create a four dimensional matrix of numbers representing (y location of pixel, x location, red, green or blue channel, frame).
-For each pixel we have three channels (RGB) and we take the discrete Fourier transform (DFT) of each channel over the whole video.
-We then discretize the DFT and sort it into a set number of bins. 
-Initially we set the number of bins, n\_bins = 10.
-This may well change as the project advances.
-Each pixel is considered a different training example and our input feature vector per pixel contains: 
-the x,y coordinates of each pixel, and the values of each of the bins per channel (ie 2 + 3*n\_bins features)
-giving us a feature vector of size 32.
-Our output is a vector of values corresponding to k frequencies/bins for the waveform.
-Thus our parameters matrix, $\theta \in \mathbb{R}^{(3*n\_bins + 2) \times k}$
-
-It is worth noting that when choosing our bin sizes and locations, we have assumed a prior on our expected waveform. 
-We have chosen to look only at low frequencies (between 0-5 Hz) and 
-ignore higher ones because we expect the pulse-ox waveform will contain  mostly low frequencies.
-We also expect any high frequencies are more likely to be noise.
-This reduces the dimension of our dataset too.\\
-
-\large Initial results \\
-\small Our initial computations on the pixel-intensity data revealed, unsuprisingly,
-that pixel intensity variation over time for a reasonably still video was not large.
-Often a single color channel for a pixel would have a range of 3 (when it could vary from 0-255) over the whole video, even if that pixel was contained in the face.
-The DFT of the data would produce large peaks at 0 Hz and would rapidly diminish in magnitude.
-We note that we may have to resort to using EVM-enhanced videos if our training data has signals that are too weak to pick up.
-
-
 \section{Getting started}
 
   It is the Eulerian Video Magnification (EVM) project that led us to think it was possible to extract pulse and oxygen saturation values from a video,
@@ -180,6 +154,8 @@ We note that we may have to resort to using EVM-enhanced videos if our training 
   Thus, while the EVM processing strikingly shows that it is possible to extract medically relevant data from a simple video, we also realized that processing had too many 
   unknown effects for us to get started by directly adding new layers on top of it. Thus we decided to start building from the ground up.
 
+  \section{Understanding our problem}
+
   Another question that arose from this visualization was whether or not it would be necessary to use some face detection tool 
   in order to be able to look at the 'right' pixels (those with a heartbeat). We then realized we had actually 
   had a wrong definition of our problem, up until then.
@@ -194,7 +170,40 @@ We note that we may have to resort to using EVM-enhanced videos if our training 
   the camera our sensor. It happens that we have a video of a whole face, instead we could 
   have only one pixel of the whole video and the concept would still work. 
   With that different view, our problem changes, and the difficulty comes from the 
-  fact that we do not know much about either our light source or our sensors.
+  fact that, contrary to a an actual pulse oximeter, we do not know much about either our light source or our sensors.
+  Thus, our problem could be summarized as: matching the red, green and blue channel values of our video to 
+  the intensity readings of the pulse oximeter.
+
+\section{Parametrization}
+  This new understanding of our problems naturally means that our core set of predictors are the three color channel intensity values through
+  time \(I_R(t), I_G(t), I_B(t)\), which are in infinite-dimensional spaces, and we want to do a regression of the reading of our pulse oximeter $Ox(t)$ 
+  on these intensity values.
+  We then made two additional assumptions that simplify our problem greatly:
+  \begin{itemize}
+    \item We're only interested in periodic phenomena.
+    \item These phenomena have a frequency lying in the 0-5Hz range.
+  \end{itemize}
+
+  The first assumption means we can take Fourier series decomposition of our intensity/oximetry values, the second that we can
+  limit the decomposition to only a small number $p$ of harmonics. We took 10 as a starting value:
+  \[
+    I(t)/Ox(t) = \sum_{n=-p}^{p} c_n e^{i \left(\frac{2\pi nt}{T}  + \phi_n \right) }
+  \]
+
+  Thus, our training output $y$ is a vector of size $2p$, with the coefficients of the Fourier decomposition.
+  Our feature vector contains the $2p$ coefficients of the Fourier decomposition for each of the three color channels.
+  Each pixel is considered a different training example, we have $k$ of them for one video (typically \(k=1280\times 720\)).
+  Thus our parameters matrix, $\theta \in \mathbb{R}^{(3p) \times k}$
+
+
+\section{Initial results}
+  Our initial computations on the pixel-intensity data revealed, unsuprisingly,
+  that pixel intensity variation over time for a reasonably still video was not large.
+  Often a single color channel for a pixel would have a range of 3 (when it could vary from 0-255) over the whole video, even if that pixel was contained in the face.
+  The DFT of the data would produce large peaks at 0 Hz and would rapidly diminish in magnitude. Because of this, we haven't hade any significant linear regression results.
+  A simple solution is to subtract a mean intensity value to our pixel, so as to increase the relative intensity variations.
+  Ultimately, we may have to resort to using EVM-enhanced videos if our training data has signals that are too weak to pick up.
+
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
