@@ -96,12 +96,23 @@
 
 \large Introduction \\
 %
-\small Recent advances in mobile computing power have opened up myriad of possibilities in continuous monitoring of health. This, combined with the camera faculty available in most smartphones has enabled heart rate detection from mobile phone video. We believe yet more information can be gleaned from mobile phone video data. Our aim is to predict the pulse oximeter waveform of a person purely from a video of them. This would give us both the heart rate and the $O_2$ saturation of the blood without the need for medical equipment.
+\small Recent advances in mobile computing power have opened up myriad of possibilities in continuous monitoring of health. 
+This, combined with the camera faculty available in most smartphones has enabled heart rate detection from mobile phone video. 
+We believe yet more information can be gleaned from mobile phone video data. 
+Our aim is to predict the pulse oximeter waveform of a person purely from a video of them. 
+This would give us both the heart rate and the $O_2$ saturation of the blood without the need for medical equipment.
 
-Why we think this can work will be justified briefly in two steps. The first comes from a paper released in 2011 from the MIT Computer Science and Artifical Intelligence Lab. They use a procedure called Eulerian Video Magnification (http://people.csail.mit.edu/mrub/vidmag/). (In it a simple FFT is performed on each pixel within a video. Amplitudes within each frequency are extracted and scaled, and the modified FFT is inverted to produce the magnified signal. This method enhances those frequencies which are normally imperceivable, such as blood flow or respiration, such that they are made extraordinarily salient to the naked eye). % Not sure if all this is needed
+Why we think this can work will be justified briefly in two steps. 
+The first comes from a paper released in 2011 from the MIT Computer Science and Artifical Intelligence Lab. 
+They use a procedure called Eulerian Video Magnification (http://people.csail.mit.edu/mrub/vidmag/). 
+(In it a simple FFT is performed on each pixel within a video. Amplitudes within each frequency are extracted and scaled, and the modified FFT is inverted to produce the magnified signal. 
+This method enhances those frequencies which are normally imperceivable, such as blood flow or respiration, such that they are made extraordinarily salient to the naked eye). 
+% Not sure if all this is needed
 Most importantly however, it demonstrates that these features are in fact present in the video data.
 
-The second part of the justification is that pulse oximetry as a technique relies on the change in colour of skin. Transmittance pulse oximetry relies on shining a light on a thin section of skin and looking at the change in transmittance over time. Reflectance pulse oximetry, another technique, does not require a thin section of skin.
+The second part of the justification is that pulse oximetry as a technique relies on the change in colour of skin. 
+Transmittance pulse oximetry relies on shining a light on a thin section of skin and looking at the change in transmittance over time. 
+Reflectance pulse oximetry, another technique, does not require a thin section of skin.
 
 We believe these two ideas imply that there is information present in the video to reconstruct the pulse oximeter waveform.
 
