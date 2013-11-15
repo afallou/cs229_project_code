@@ -144,18 +144,14 @@ We believe these two ideas imply that there is information present in the video 
     \caption{Red channel of the EVM output, before recombining with the original video.}
   \end{figure}
 
-  What is striking is that the output for these two frames seem like they are the same image with inverted colors. In fact, after processing, the whole video presents a 
-  periodic color with a frequency that seems equal to the heartbeat. This does not happen with the data provided in the paper, where in a similar video only the person's face 
-  changes color.
+  Strinkingly, these two frames show that the whole video presents a  periodic color with a frequency 
+  that seems equal to the heartbeat. This does not happen with the data provided in the paper, 
+  where in a similar video only the person's face changes color.
 
-  Thus, while the EVM processing strikingly shows that it is possible to extract medically relevant data from a simple video, we also realized that processing had too many 
+  Thus, while the EVM processing shows that it is possible to extract medically relevant data from a simple video, we also realized that processing had too many 
   unknown effects for us to get started by directly adding new layers on top of it. Thus we decided to start building from the ground up.
 
   \section{Understanding our problem}
-
-  Another question that arose from this visualization was whether or not it would be necessary to use some face detection tool 
-  in order to be able to look at the 'right' pixels (those with a heartbeat). We then realized we had actually 
-  had a wrong definition of our problem, up until then.
 
   What we are essentially trying to do is to get the same reading a pulse oximeter, but with a camera.
   An transmittance pulse oximeter measures the absorption of light by a thin layer of 
@@ -166,10 +162,10 @@ We believe these two ideas imply that there is information present in the video 
   Thus, we could see our experiment as one big pulse oximeter. The room is our light source, 
   the camera our sensor. It happens that we have a video of a whole face, instead we could 
   have only one pixel of the whole video and the concept would still work. 
-  With that different view, our problem changes, and the difficulty comes from the 
-  fact that, contrary to a an actual pulse oximeter, we do not know much about either our light source or our sensors.
-  Thus, our problem could be summarized as: matching the red, green and blue channel values of our video to 
-  the intensity readings of the pulse oximeter.
+  The difficulty comes from the fact that, contrary to a an actual pulse oximeter,
+  we do not know much about either our light source or our sensors.
+  Thus, our problem could be summarized as: matching the red, green and blue channel 
+  values of our video to the intensity readings of the pulse oximeter.
 
 \section{Parametrization}
   This new understanding of our problems naturally means that our core set of predictors are the three color channel intensity values through
