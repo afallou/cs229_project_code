@@ -1,1 +1,8 @@
 .DS_Store
+videos/output/dont_commit/
+*.pdf
+*.aux
+*.fdb_latexmk
+*.synctex.gz
+*.log
+*.out
