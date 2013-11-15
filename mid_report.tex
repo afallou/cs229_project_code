@@ -104,17 +104,44 @@ This would give us both the heart rate and the $O_2$ saturation of the blood wit
 
 Why we think this can work will be justified briefly in two steps. 
 The first comes from a paper released in 2011 from the MIT Computer Science and Artifical Intelligence Lab. 
-They use a procedure called Eulerian Video Magnification (http://people.csail.mit.edu/mrub/vidmag/). 
-(In it a simple FFT is performed on each pixel within a video. Amplitudes within each frequency are extracted and scaled, and the modified FFT is inverted to produce the magnified signal. 
-This method enhances those frequencies which are normally imperceivable, such as blood flow or respiration, such that they are made extraordinarily salient to the naked eye). 
-% Not sure if all this is needed
+They use a procedure called Eulerian Video Magnification (http://people.csail.mit.edu/mrub/vidmag/).  
 Most importantly however, it demonstrates that these features are in fact present in the video data.
 
 The second part of the justification is that pulse oximetry as a technique relies on the change in colour of skin. 
-Transmittance pulse oximetry relies on shining a light on a thin section of skin and looking at the change in transmittance over time. 
-Reflectance pulse oximetry, another technique, does not require a thin section of skin.
+Oxygenated and de-oxygenated blood have slightly different hues of red.
+This is caused by the difference in hemoglobin levels and this color difference is what the pulse oximeter looks for. 
+We intend to look for this change too.
 
-We believe these two ideas imply that there is information present in the video to reconstruct the pulse oximeter waveform.
+We believe these two ideas imply that there is information present in the video to reconstruct the pulse oximeter waveform.\\
+\\
+\\
+\\ % Left space for Adrien's bit
+\\
+\large Gathering the data \\
+\small For each video, we create a four dimensional matrix of numbers representing (y location of pixel, x location, red, green or blue channel, frame).
+For each pixel we have three channels (RGB) and we take the discrete Fourier transform (DFT) of each channel over the whole video.
+We then discretize the DFT and sort it into a set number of bins. 
+Initially we set the number of bins, n\_bins = 10.
+This may well change as the project advances.
+Each pixel is considered a different training example and our input feature vector per pixel contains: 
+the x,y coordinates of each pixel, and the values of each of the bins per channel (ie 2 + 3*n\_bins features)
+giving us a feature vector of size 32.
+Our output is a vector of values corresponding to k frequencies/bins for the waveform.
+Thus our parameters matrix, $\theta \in \mathbb{R}^{(3*n\_bins + 2) \times k}$
+
+It is worth noting that when choosing our bin sizes and locations, we have assumed a prior on our expected waveform. 
+We have chosen to look only at low frequencies (between 0-5 Hz) and 
+ignore higher ones because we expect the pulse-ox waveform will contain  mostly low frequencies.
+We also expect any high frequencies are more likely to be noise.
+This reduces the dimension of our dataset too.\\
+
+\large Initial results \\
+\small Our initial computations on the pixel-intensity data revealed, unsuprisingly,
+that pixel intensity variation over time for a reasonably still video was not large.
+Often a single color channel for a pixel would have a range of 3 (when it could vary from 0-255) over the whole video, even if that pixel was contained in the face.
+The DFT of the data would produce large peaks at 0 Hz and would rapidly diminish in magnitude.
+We note that we may have to resort to using EVM-enhanced videos if our training data has signals that are too weak to pick up.
+
 
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
