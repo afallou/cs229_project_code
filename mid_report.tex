@@ -99,16 +99,14 @@
 
 \section*{Introduction}
 %
-\small Recent advances in mobile computing power have opened up myriad of possibilities in continuous monitoring of health. 
-This, combined with the camera faculty available in most smartphones has enabled heart rate detection from mobile phone video. 
-We believe yet more information can be gleaned from mobile phone video data. 
+\small  
 Our aim is to predict the pulse oximeter waveform of a person purely from a video of them. 
 This would give us both the heart rate and the $O_2$ saturation of the blood without the need for medical equipment.
 
 Why we think this can work will be justified briefly in two steps. 
 The first comes from a paper released in 2011 from the MIT Computer Science and Artifical Intelligence Lab. 
-They use a procedure called Eulerian Video Magnification (http://people.csail.mit.edu/mrub/vidmag/).  
-Most importantly however, it demonstrates that these features are in fact present in the video data.
+They use a procedure called Eulerian Video Magnification \footnote{http://people.csail.mit.edu/mrub/vidmag/},
+demonstrating that a person's rate can be extracted from a video by correctly amplifying colors.
 
 The second part of the justification is that pulse oximetry as a technique relies on the change in colour of skin. 
 Oxygenated and de-oxygenated blood have slightly different hues of red.
@@ -120,8 +118,7 @@ We believe these two ideas imply that there is information present in the video 
 \\
 \section{Getting started}
 
-  It is the Eulerian Video Magnification (EVM) project that led us to think it was possible to extract pulse and oxygen saturation values from a video,
-  we first set out to understand the details of the EVM process. The video can undergo different treatments depending on the goal, but the process to amplify changes 
+  We first set out to understand the details of the Eulerian Video Magnification (EVM) process. The video can undergo different treatments depending on the goal, but the process to amplify changes 
   can be summarized as:
 
   \begin{itemize}
