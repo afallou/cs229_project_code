@@ -97,35 +97,26 @@
   \thispagestyle{empty}
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+
 \section*{Introduction}
 %
 \small  
-Our aim is to predict the pulse oximeter waveform of a person purely from a video of them. 
-This would give us both the heart rate and the $O_2$ saturation of the blood without the need for medical equipment.
+Cardiovascular health is the \emph{sin qua non} of human life. Early detection of cardiovascular disease are of paramount importance in public health. This project aims to develop a method to visualize the perfusion of blood through the skin via pulse oximetry. Pulse oximetry is a technique that exploits the fact that oxygenated and deoxygenated hemoglobin changes the color of red blood cells. The technique maps these changes in rgb color of the visible skin to the invisible presence of oxygenated vs deoxygenated blood in the local vasculature underneath the skin.
 
-Why we think this can work will be justified briefly in two steps. 
-The first comes from a paper released in 2011 from the MIT Computer Science and Artifical Intelligence Lab. 
-They use a procedure called Eulerian Video Magnification \footnote{http://people.csail.mit.edu/mrub/vidmag/},
-demonstrating that a person's rate can be extracted from a video by correctly amplifying colors.
+Previous studies have shown that video obtained from an ordinary webcam can be used to visualize perfusion by selectively amplifying temporal frequencies in video \footnote{http://people.csail.mit.edu/mrub/vidmag/}. A study by the MIT CSAIL showed that this technique can also be used to infer heart rate from the person being taped. The present project aims to extend this work to detect the relative changes in oxygenated vs deoxygenated blood and reconstruct the pulse oximeter waveform from an ordinary webcam video.
 
-The second part of the justification is that pulse oximetry as a technique relies on the change in colour of skin. 
-Oxygenated and de-oxygenated blood have slightly different hues of red.
-This is caused by the difference in hemoglobin levels and this color difference is what the pulse oximeter looks for. 
-We intend to look for this change too.
 
-We believe these two ideas imply that there is information present in the video to reconstruct the pulse oximeter waveform.\\
-\\
-\\
-\section{Getting started}
+
+\section{Methods}
 
-  We first set out to understand the details of the Eulerian Video Magnification (EVM) process. The video can undergo different treatments depending on the goal, but the process to amplify changes 
-  can be summarized as:
+Previous work on Eulerian Video Magnification (EVM), has led to the following processing pipeline, which we later modify for our purpose. The video can undergo different treatments, but the central goal is to amplify spatial or temporal changes that are normally invisible to the naked eye. The process can be summarized as:
 
   \begin{itemize}
-    \item Separate the video into several spatial frequency bands.
-    \item In each spatial frequency band, blur and downsample several times. The goal of the first step was to retain important spatial features when going through this second step (e.g. high frequencies such as edges).
-    \item Amplify selected temporal frequency band.
-    \item Recombine spatial frequencies, and add the result to the original video.
+    \item Separate the video into distinct spatial frequency bands by performing a 2D spatial fourier decomposition. 
+    \item For each spatial frequency band, blur and downsample several times using Gaussian or LaPlacian Pyramids. The first step preserves spatial features (e.g. high frequencies such as edges) through this destructive process.
+    \item Amplify a pre-selected temporal frequency band.
+    \item Recombine spatial frequencies from step 1, and add the amplified video to the original video.
   \end{itemize}
   Figure 1 presents an example for the output of the next-to-last-step. 
 
@@ -144,41 +135,34 @@ We believe these two ideas imply that there is information present in the video 
     \caption{Red channel of the EVM output, before recombining with the original video.}
   \end{figure}
 
-  Strinkingly, these two frames show that the whole video presents a  periodic color with a frequency 
-  that seems equal to the heartbeat. This does not happen with the data provided in the paper, 
+Strikingly, these two frames showed that the whole video undergoes a periodic color change with a frequency 
+  that seems equal to the heartbeat. This did not happen with the data provided in the paper, 
   where in a similar video only the person's face changes color.
 
-  Thus, while the EVM processing shows that it is possible to extract medically relevant data from a simple video, we also realized that processing had too many 
-  unknown effects for us to get started by directly adding new layers on top of it. Thus we decided to start building from the ground up.
+  \begin{itemize}
+    \item Extract each pixel’s time course from the video. 
+\item For each pixel, separate the colors into R, G, B bands and perform a fourier decomposition where frequency is grouped into n bins.
+\item Learn weights via linear regression for frequencies within each color band to reproduce the simultaneously recorded pulse oximeter data in the training data set. 
+    \item Amplify the temporal frequencies according to the weights of the regression.
+    \item Combine the amplified frequencies for each pixel with the original video.
+  \end{itemize}
 
-  \section{Understanding our problem}
 
-  What we are essentially trying to do is to get the same reading a pulse oximeter, but with a camera.
-  An transmittance pulse oximeter measures the absorption of light by a thin layer of 
-  tissue through time. Because oxygenated and de-oxygenated hemoglobin do not absorb light 
-  at the same wavelength, this measure yields the blood's oxygen saturation, And by measuring the 
-  periodic change of absorbance caused by the pulse, the same measure also yields a heartbeat reading.
+  
 
-  Thus, we could see our experiment as one big pulse oximeter. The room is our light source, 
-  the camera our sensor. It happens that we have a video of a whole face, instead we could 
-  have only one pixel of the whole video and the concept would still work. 
-  The difficulty comes from the fact that, contrary to a an actual pulse oximeter,
-  we do not know much about either our light source or our sensors.
-  Thus, our problem could be summarized as: matching the red, green and blue channel 
-  values of our video to the intensity readings of the pulse oximeter.
-
+
 \section{Parametrization}
   This new understanding of our problems naturally means that our core set of predictors are the three color channel intensity values through
-  time \(I_R(t), I_G(t), I_B(t)\), which are in infinite-dimensional spaces, and we want to do a regression of the reading of our pulse oximeter $Ox(t)$ 
+  time \(I_R(t), I_G(t), I_B(t)\), which are infinite-dimensional feature vectors, and we want to do a regression of the reading of our pulse oximeter $Ox(t)$ 
   on these intensity values.
-  We then made two additional assumptions that simplify our problem greatly:
+  We then made two additional prior assumptions:
   \begin{itemize}
-    \item We're only interested in periodic phenomena.
+    \item We are only interested in periodic phenomena.
     \item These phenomena have a frequency lying in the 0-5Hz range.
   \end{itemize}
 
   The first assumption means we can take Fourier series decomposition of our intensity/oximetry values, the second that we can
-  limit the decomposition to only a small number $p$ of harmonics. We took 10 as a starting value:
+  limit the decomposition to only a small number $p$ of harmonics. We took $p$ = 10 as a starting value:
   \[
     I(t)/Ox(t) = \sum_{n=-p}^{p} c_n e^{i \left(\frac{2\pi nt}{T}  + \phi_n \right) }
   \]
@@ -186,19 +170,18 @@ We believe these two ideas imply that there is information present in the video 
   Thus, our training output $y$ is a vector of size $2p$, with the coefficients of the Fourier decomposition.
   Our feature vector contains the $2p$ coefficients of the Fourier decomposition for each of the three color channels.
   Each pixel is considered a different training example, we have $k$ of them for one video (typically \(k=1280\times 720\)).
-  Thus our parameters matrix, $\theta \in \mathbb{R}^{(3p) \times k}$
+  Thus our parameters matrix, $\theta \in \mathbb{R}^{(6p) \times k}$
 
-
+
 \section{Initial results}
-  Our initial computations on the pixel-intensity data revealed, unsuprisingly,
+  Our initial computations on the pixel-intensity data revealed, unsurprisingly,
   that pixel intensity variation over time for a reasonably still video was not large.
   Often a single color channel for a pixel would have a range of 3 (when it could vary from 0-255) over the whole video, even if that pixel was contained in the face.
-  The DFT of the data would produce large peaks at 0 Hz and would rapidly diminish in magnitude. Because of this, we haven't hade any significant linear regression results.
-  A simple solution is to subtract a mean intensity value to our pixel, so as to increase the relative intensity variations.
+  The DFT of the data would produce large peaks at 0 Hz and would rapidly diminish in magnitude. Because of this, we have not had any significant linear regression results.
+  A simple solution is to subtract a mean intensity value of our pixel, so as to increase the relative intensity variations over time.
   Ultimately, we may have to resort to using EVM-enhanced videos if our training data has signals that are too weak to pick up.
-
-
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\end{document}
-
-
+  
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \end{document}
+  
+  
