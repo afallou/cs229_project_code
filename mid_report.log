@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.8.7)  15 NOV 2013 16:49
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012) (format=pdflatex 2012.8.7)  15 NOV 2013 16:50
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1055,15 +1055,8 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 184.
  (./mid_report.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 184.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 184.
-
-
-Package rerunfilecheck Warning: File `mid_report.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `mid_report.out':
-(rerunfilecheck)             Before: 192708EB0D5CC4EB17C4C5CD0B6F6722;142
-(rerunfilecheck)             After:  619DFBF56AFAC8AB6076A02D3DEE74E6;132.
+Package rerunfilecheck Info: File `mid_report.out' has not changed.
+(rerunfilecheck)             Checksum: 619DFBF56AFAC8AB6076A02D3DEE74E6;132.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 184.
  ) 
 Here is how much of TeX's memory you used:
@@ -1090,7 +1083,7 @@ ts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2012basic/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2012basic/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2012basic/tex
 mf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on mid_report.pdf (3 pages, 161964 bytes).
+Output written on mid_report.pdf (3 pages, 161965 bytes).
 PDF statistics:
  105 PDF objects out of 1000 (max. 8388607)
  82 compressed objects within 1 object stream
