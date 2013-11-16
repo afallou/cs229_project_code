@@ -36,7 +36,7 @@
 \makeatother
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\lhead{\footnotesize Adrien Fallou} % header left
+\lhead{\footnotesize D.Deriso, N. Banerjee, A. Fallou} % header left
 \chead{\footnotesize} % header center
 \rhead{\thepage} % header right
 \lfoot{} 
@@ -112,46 +112,45 @@ Previous studies have shown that video obtained from an ordinary webcam can be u
 
 Previous work on Eulerian Video Magnification (EVM), has led to the following processing pipeline, which we later modify for our purpose. The video can undergo different treatments, but the central goal is to amplify spatial or temporal changes that are normally invisible to the naked eye. The process can be summarized as:
 
-  \begin{itemize}
-    \item Separate the video into distinct spatial frequency bands by performing a 2D spatial fourier decomposition. 
-    \item For each spatial frequency band, blur and downsample several times using Gaussian or LaPlacian Pyramids. The first step preserves spatial features (e.g. high frequencies such as edges) through this destructive process.
-    \item Amplify a pre-selected temporal frequency band.
-    \item Recombine spatial frequencies from step 1, and add the amplified video to the original video.
-  \end{itemize}
-  Figure 1 presents an example for the output of the next-to-last-step. 
+\begin{itemize}
+\item Separate the video into distinct spatial frequency bands by performing a 2D spatial fourier decomposition. 
+\item For each spatial frequency band, blur and downsample several times using Gaussian or LaPlacian Pyramids. The first step preserves spatial features (e.g. high frequencies such as edges) through this destructive process.
+\item Amplify a pre-selected temporal frequency band.
+\item Recombine spatial frequencies from step 1, and add the amplified video to the original video.
+\end{itemize}
+Figure 1 presents an example for the output of the next-to-last-step. 
 
-  \begin{figure}
-    \begin{subfigure}{.5\textwidth}
-      \captionsetup{justification=centering}
-      \includegraphics[width=\textwidth]{images/red_peak.png}
-      \caption{At at a given time}
-    \end{subfigure}
-    \begin{subfigure}{.5\textwidth}
-      \captionsetup{justification=centering}
-      \includegraphics[width=\textwidth]{images/red_trough.png}
-      \caption{Half a heartbeat period later}
-    \end{subfigure}
-    \captionsetup{justification=centering}
-    \caption{Red channel of the EVM output, before recombining with the original video.}
-  \end{figure}
+\begin{figure}
+\begin{subfigure}{.5\textwidth}
+\captionsetup{justification=centering}
+\includegraphics[width=\textwidth]{images/red_peak.png}
+\caption{At at a given time}
+\end{subfigure}
+\begin{subfigure}{.5\textwidth}
+\captionsetup{justification=centering}
+\includegraphics[width=\textwidth]{images/red_trough.png}
+\caption{Half a heartbeat period later}
+\end{subfigure}
+\captionsetup{justification=centering}
+\caption{Red channel of the EVM output, before recombining with the original video.}
+\end{figure}
 
-Strikingly, these two frames showed that the whole video undergoes a periodic color change with a frequency 
-  that seems equal to the heartbeat. This did not happen with the data provided in the paper, 
-  where in a similar video only the person's face changes color.
+Strikingly, these two frames showed that the whole video undergoes a periodic color change with a frequency that seems equal to the heartbeat. This did not happen with the data provided in the paper, where in a similar video only the person's face changes color.
+To extract features relevant to pulse oximetery, we seek out a weighted combination of periodic changes in color space that best reconstruct our training pulse oximetery signal. We therefore undergo the following process:
 
-  \begin{itemize}
-    \item Extract each pixel’s time course from the video. 
+\begin{itemize}
+\item Extract each pixel’s time course from the video. 
 \item For each pixel, separate the colors into R, G, B bands and perform a fourier decomposition where frequency is grouped into n bins.
 \item Learn weights via linear regression for frequencies within each color band to reproduce the simultaneously recorded pulse oximeter data in the training data set. 
-    \item Amplify the temporal frequencies according to the weights of the regression.
-    \item Combine the amplified frequencies for each pixel with the original video.
-  \end{itemize}
+\item Amplify the temporal frequencies according to the weights of the regression.
+\item Combine the amplified frequencies for each pixel with the original video.
+\end{itemize}
 
 
   
 
 
-\section{Parametrization}
+\section{Model}
   This new understanding of our problems naturally means that our core set of predictors are the three color channel intensity values through
   time \(I_R(t), I_G(t), I_B(t)\), which are infinite-dimensional feature vectors, and we want to do a regression of the reading of our pulse oximeter $Ox(t)$ 
   on these intensity values.
