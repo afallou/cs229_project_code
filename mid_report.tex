@@ -102,7 +102,7 @@
 \section*{Introduction}
 %
 \small  
-Cardiovascular health is the \emph{sin qua non} of human life. Early detection of cardiovascular disease are of paramount importance in public health. This project aims to develop a method to visualize the perfusion of blood through the skin via pulse oximetry. Pulse oximetry is a technique that exploits the fact that oxygenated and deoxygenated hemoglobin changes the color of red blood cells. The technique maps these changes in rgb color of the visible skin to the invisible presence of oxygenated vs deoxygenated blood in the local vasculature underneath the skin.
+Cardiovascular health is the \emph{sin qua non} of human life. Early detection of cardiovascular disease is of paramount importance in public health. This project aims to develop a method to visualize the perfusion of blood through the skin via pulse oximetry. Pulse oximetry is a technique that exploits the fact that oxygenated and deoxygenated hemoglobin changes the color of red blood cells. The technique maps these changes in rgb color of the visible skin to the invisible presence of oxygenated vs deoxygenated blood in the local vasculature underneath the skin.
 
 Previous studies have shown that video obtained from an ordinary webcam can be used to visualize perfusion by selectively amplifying temporal frequencies in video \footnote{http://people.csail.mit.edu/mrub/vidmag/}. A study by the MIT CSAIL showed that this technique can also be used to infer heart rate from the person being taped. The present project aims to extend this work to detect the relative changes in oxygenated vs deoxygenated blood and reconstruct the pulse oximeter waveform from an ordinary webcam video.
 
@@ -143,7 +143,7 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
 \item For each pixel, separate the colors into R, G, B bands and perform a fourier decomposition where frequency is grouped into n bins.
 \item Learn weights via linear regression for frequencies within each color band to reproduce the simultaneously recorded pulse oximeter data in the training data set. 
 \item Amplify the temporal frequencies according to the weights of the regression.
-\item Combine the amplified frequencies for each pixel with the original video.
+\item Combine the amplified video with the original video.
 \end{itemize}
 
 
