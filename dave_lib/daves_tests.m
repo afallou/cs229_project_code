@@ -7,6 +7,7 @@ addpath('matlabPyrTools')
 %------------------------------------------------------------
 % input/output
 
+
 input_video = '8_sec_no_movement_mp4.mp4';
 % input_video = '8_sec_no_movement_mov.mov';
 
