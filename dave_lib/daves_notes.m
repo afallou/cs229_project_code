@@ -102,6 +102,8 @@ function [f] = w_fq(fq, fs)
 % -----------------------------------------------------------------------------
 
 addpath('dave_lib')
+
+
 x = create_waveform_of_known_fq(10, 500);
 [pxx,f] = pwelch(x,500,300,500,fs);
 plot(f,10*log10(pxx))
@@ -118,6 +120,49 @@ frame = rgb2ntsc(rgbframe);
 
 
 
+
+
+
+% -----------------------------------------------------------------------------
+
+addpath('dave_lib')
+
+% open video
+vid_test = VideoReader('test.mp4.avi');
+n_frames = vid_test.NumberOfFrames;
+vid_h = vid_test.Height;
+vid_w = vid_test.Width;
+
+y = [];
+mov(1:n_frames) = struct('cdata', zeros(vid_h, vid_w, 3, 'uint8'), 'colormap', []);
+for k = 1 : n_frames
+    mov(k).cdata = read(vid_test, k);
+    y(k) = mov(k).cdata(1,1,1); % you can try any other pixel, ex (5,5,1)
+end
+plot(y);
+pwelch(y);
+
+
+
+video_matrix = read(vid_test);
+video_matrices_array{i} = video_matrix
+
+
+video_matrix_fft =  fft(video_matrix, [], 4);
+
+% Taking the Fourier transform components with biggest module, these will be our features (for each color)
+[~, max_indices] = maxk(abs(video_matrix_fft), feature_vector_size, 4);
+
+% From the result of maxk, we have to get the actual elements
+% TODO(adrien): avoid using loop
+pixel_maximum_elements = zeros(size(video_matrix, 1), size(video_matrix, 2), 3, feature_vector_size);
+for k = 1:3
+	for i = 1:size(video_matrix, 1)
+		for j = 1:size(video_matrix, 2)
+			pixel_maximum_elements(i, j, k, :) = video_matrix_fft(i, j, k, squeeze(max_indices(i, j, k, :)));
+		end
+	end
+end
 
 
 
