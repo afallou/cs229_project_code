@@ -1,0 +1,1 @@
+[training_matrix, training_examples_matrices_array] = oximetry_linear_regression({'/Users/adrien/Dropbox/Stanford/Massive big data/data/adrien_face_2.mp4'}, 5);
