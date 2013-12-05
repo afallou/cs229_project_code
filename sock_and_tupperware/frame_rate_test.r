@@ -46,7 +46,7 @@ plot(data_ts, type="l", col = 'red', main='warped + resampled + timeseries')
 spectrum( data_ts, log="dB", ylim=c(0, 40), xlim=c(0,10), detrend=F, demean=F, taper=0, main="Periodogram", sub=NA)
 
 # fit a series of sine waves
-hz_wave = function(oscillation_hz, duration, sample_hz=2) return (sin(seq(0,duration,by=1/sample_hz)*2*pi*oscillation_hz))
+hz_wave = function(oscillation_hz, duration, sample_hz=2) return (sin(head(seq(0,duration,by=1/sample_hz),-1)*2*pi*oscillation_hz))
 #sin_fit = hz_wave(max_fq, (max(time_v)-min(time_v))/1000, sample_fq)*4 + mean(data_ts)
 sin_fit = 0
 for(i in 1:length(peaks)){ sin_fit = sin_fit + hz_wave(f_p$fq[peaks[i]], (max(time_v)-min(time_v))/1000, sample_fq) }
@@ -60,5 +60,64 @@ spectrum( data_ts, log="dB", ylim=c(0, 40), xlim=c(0,10), detrend=F, demean=F, t
 points(f_p$fq[peaks],10*log10(f_p$pw[peaks]), col='red')
 plot(data_ts, type="l", col = 'black', main='predicted waveform')
 lines(seq(0, attr(data_ts,'tsp')[2	], length.out = length(data_ts)), sin_fit*4 + mean(data_ts), col = 'red') # plot fitted sine wave
+
+
+require('pracma')
+
+Fs = 1000;                    #Sampling frequency
+T = 1/Fs;                     #Sample time
+L = 1000;                     #Length of signal
+t = (0:L-1)*T;                #Time vector
+
+# Sum of a 50 Hz sinusoid and a 120 Hz sinusoid
+x = 0.7*sin(2*pi*50*t) + sin(2*pi*120*t); 
+y = x + 2*randn(size(t));     # Sinusoids plus noise
+
+NFFT = 2^nextpow2(L); # Next power of 2 from length of y
+Y = fft(y,NFFT)/L;
+f = Fs/2*linspace(0,1,NFFT/2+1);
+
+# plot signal
+plot(Fs*t[1:50],y[1:50], xlab='time (milliseconds)', type='l')
+title('Signal Corrupted with Zero-Mean Random Noise')
+
+# Plot single-sided amplitude spectrum.
+plot(f,2*abs(Y[1:(NFFT/2+1)]), type='l', xlab='Frequency (Hz)', ylab='|Y(f)|') 
+title('Single-Sided Amplitude Spectrum of y(t)')
+
+
+
+
+
+
+x = hz_wave(1, 4, 20)
+NFFT = 2^nextpow2(length(x))
+f = 20/2*linspace(0,1,NFFT/2+1)
+
+
+# 
+y = exp(2*pi*fft(1:4))
+x = 1:4
+
+
+
+fft(x)
+
+
+xf = fft(fft(x), inverse = TRUE)/length(x)
+lx = 1:length(x)
+plot(lx, x, type='l')
+lines(lx, xf, type='l', col='red')
+
+
+n <- 2**16
+x <- rnorm(n)
+p <- planFFT(n)
+y <- FFT(x, plan=p)
+
+
+
+
+
 
 
