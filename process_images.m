@@ -40,10 +40,11 @@ function [video_matrix, resampling_rate] = process_images(dir_path)
 
 	% Interpolate for each pixel and color channel
 	for color_channel = 1:3	
-		for i = 1:images_height		
-			parfor j = 1:images_width
-				video_matrix(i, j, :, color_channel) = interp1(file_date, squeeze(video_matrix(i, j, :, color_channel)), resampling_vector);
-			end
-		end
+        color_channel_matrix = squeeze(video_matrix(:, :, :, color_channel));
+        color_channel_matrix = reshape(color_channel_matrix, [], image_count);
+        parfor j = 1:images_width * images_height
+            color_channel_matrix(j, :) = interp1(file_date, color_channel_matrix(j, :), resampling_vector);
+        end
+        video_matrix(:, :, :, color_channel) = reshape(color_channel_matrix, images_height, images_width, image_count);
 	end
 end
