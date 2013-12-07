@@ -1,4 +1,4 @@
-function [video_matrix, resampling_rate] = process_images(dir_path)
+function [video_matrix, resampling_rate, pulse_ox_resampled] = process_images(dir_path)
 
 	COLOR_CHANNELS_COUNT = 3;
 	% Process a series of bmp images to make a movie out of them
@@ -18,6 +18,7 @@ function [video_matrix, resampling_rate] = process_images(dir_path)
 
 	video_matrix = zeros(images_height, images_width, image_count, COLOR_CHANNELS_COUNT);
 	file_date = zeros(image_count, 1);
+    pulse_ox_value = zeros(image_count, 1);
 
 	% Filling the video 4D-matrix
 	parfor image_index = 1:image_count
@@ -29,6 +30,7 @@ function [video_matrix, resampling_rate] = process_images(dir_path)
 		image_name = dir_struct(image_index).name;
 		splitted_name = regexp(image_name, '_', 'split');
 		file_date(image_index) = str2num(splitted_name{2});
+        pulse_ox_value(image_index) = str2num(splitted_name{4});
 	end
 
 	% Resampling
@@ -39,12 +41,14 @@ function [video_matrix, resampling_rate] = process_images(dir_path)
 	resampling_vector = linspace(0, file_date(end), image_count);
 
 	% Interpolate for each pixel and color channel
-	for color_channel = 1:3	
+    for color_channel = 1:3	
         color_channel_matrix = squeeze(video_matrix(:, :, :, color_channel));
         color_channel_matrix = reshape(color_channel_matrix, [], image_count);
         parfor j = 1:images_width * images_height
             color_channel_matrix(j, :) = interp1(file_date, color_channel_matrix(j, :), resampling_vector);
         end
         video_matrix(:, :, :, color_channel) = reshape(color_channel_matrix, images_height, images_width, image_count);
-	end
+    end
+
+    pulse_ox_resampled = interp1(file_date, pulse_ox_value, resampling_vector);
 end

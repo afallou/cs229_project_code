@@ -9,7 +9,8 @@
 
 
 # import
-setwd('/Users/dderiso/Math/cs229/project/cs229_project_code/sock_and_tupperware/nullimages')
+#setwd('/Users/dderiso/Math/cs229/project/cs229_project_code/sock_and_tupperware/nullimages')
+setwd('C:/Users/Neeloy/Documents/GitHub/cs229_project_code/sock_and_tupperware/nullimages')
 
 time_v = c()
 sensor_v = c()
@@ -17,6 +18,11 @@ for(f in list.files()){
 	f_split = strsplit(f, split="_")[[1]]
 	frame = as.numeric(f_split[2])
 	sensor = as.numeric(f_split[4])
+	# Workaround for windows creating another file.
+	if(f_split[1] == "Thumbs.db")
+	{
+		next
+	}	
 	time_v = append(time_v, frame); 
 	sensor_v = append(sensor_v, sensor); 
 }

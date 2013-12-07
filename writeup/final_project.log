@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  4 DEC 2013 21:04
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  7 DEC 2013 10:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1040,7 +1040,7 @@ onts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2013/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmti10.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/s
 ymbols/msbm10.pfb>
-Output written on final_project.pdf (3 pages, 166834 bytes).
+Output written on final_project.pdf (3 pages, 166796 bytes).
 PDF statistics:
  113 PDF objects out of 1000 (max. 8388607)
  90 compressed objects within 1 object stream
