@@ -49,6 +49,6 @@ function [video_matrix, resampling_rate, pulse_ox_resampled] = process_images(di
         end
         video_matrix(:, :, :, color_channel) = reshape(color_channel_matrix, images_height, images_width, image_count);
     end
-
+    % Interpolate for the pulse oximeter values
     pulse_ox_resampled = interp1(file_date, pulse_ox_value, resampling_vector);
 end
