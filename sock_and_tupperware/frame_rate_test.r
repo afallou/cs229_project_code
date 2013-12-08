@@ -12,116 +12,234 @@
 #setwd('/Users/dderiso/Math/cs229/project/cs229_project_code/sock_and_tupperware/nullimages')
 setwd('C:/Users/Neeloy/Documents/GitHub/cs229_project_code/sock_and_tupperware/nullimages')
 
-time_v = c()
-sensor_v = c()
-for(f in list.files()){ 
-	f_split = strsplit(f, split="_")[[1]]
-	frame = as.numeric(f_split[2])
-	sensor = as.numeric(f_split[4])
-	# Workaround for windows creating another file.
-	if(f_split[1] == "Thumbs.db")
-	{
-		next
-	}	
-	time_v = append(time_v, frame); 
-	sensor_v = append(sensor_v, sensor); 
+# pipeline
+require('pracma')
+require('fftw')
+#requre('signal')
+
+
+resample = function(data_in, sampling_fq=-1, time_col='time', signal_col='signal'){
+	# purpose: interpolate data into a new timeseries with regular intervals
+	# input: data_in = data frame with time and signal columns
+	#        time_col (optional) = name of the time column, expects millisecond integers!!
+	#        signal_col (optional) = name of the signal column
+	#        fq (optional) = desired sampling rate
+	# output: interpolated data frame with time and signal columns
+	
+	# input
+	# data_in = pulseox_data
+# 	sampling_fq=-1
+# 	time_col='time'
+# 	signal_col='signal'
+	time_v = data_in[,time_col]
+	data_v = data_in[,signal_col]
+	
+	# time sequence (if desired frequency is specified or not)
+	if(sampling_fq==-1){
+		time_new = seq(min(time_v), max(time_v), length.out = length(time_v))
+	} else {
+		time_new = seq(min(time_v), max(time_v), by = sampling_fq)
+	}
+	
+	# remove time offset so it starts a 0
+	# time_new = time_new - min(time_new)
+	
+	# interpolate
+	data_interpolated = approx( x = time_v, y = data_v, xout = time_new )
+	out = data.frame(time=data_interpolated$x, signal=data_interpolated$y)
+	
+	# estimate duration of input and output signal via median interval
+	t_l = length(time_v)
+	t_l_n = length(time_new)
+	sample_fq_raw = 1000/median(time_v[2:t_l] - time_v[1:(t_l-1)])
+	sample_fq_resampled = 1000/median(time_new[2:t_l_n] - time_new[1:(t_l_n-1)])
+	# sample_fq_raw = (max(time_v) - min(time_v))/ median(time_v[2:t_l] - time_v[1:(t_l-1)])
+	# sample_fq_resampled = (max(time_new) - min(time_new))/ median(time_new[2:t_l_n] - time_new[1:(t_l_n-1)])
+	
+	attr(out, 'sampling_fq_raw') = sample_fq_raw
+	attr(out, 'sampling_fq') = sample_fq_resampled
+	
+	return(out)
 }
 
-# approx sampling frequency
-# purpose: convert time_v into a new timeseries with regular intervals
-sample_fq = 1000*length(time_v)/(max(time_v) - min(time_v)) # ndata points/duration of data * 1000 (to convert to sec)
-data_ts = ts(data=sensor_v, start=0, end=(max(time_v)-min(time_v))/1000, frequency=sample_fq) # interpolates by default
+simple_fft = function(signal_in, sampling_fq=-1){
+	# purpose: perform a one-sided fft and return phase and fq
+	# input: signal_in = signal vector
+	#        sampling_fq = sampling rate of signal
+	#        if signal_in is a data frame with signal and time and sampling_fq attributes, sampling_fq is not used
+	# output: frequency with corresponding power and phase
+	
+	if(sampling_fq == -1){
+		sampling_fq = attr(signal_in, 'sampling_fq')
+		signal_in = signal_in$signal
+	}
+	
+	# params
+	#sample_fq = 1000                                             # sampling frequency
+	sample_interval = 1/sampling_fq                               # sample time
+	sample_duration = length(signal_in)                           # sample duration (length of signal)
+	
+	#fft
+	next_pow_2 = 2^nextpow2(sample_duration)                      # next power of 2 from length of y
+	data_fft = fft(signal_in, next_pow_2)/sample_duration         # fft with fq and phase
+	
+	# frequency
+	frequency_labels = sampling_fq/2*linspace(0,1,next_pow_2/2+1)   # frequency labels (ex. for plot)
+	frequency_magnitude = 2*abs(data_fft[1:(next_pow_2/2+1)])     # frequency magnitude
+	frequency_magnitude[1] = 0 # hack for now
+	
+	# phase
+	phase = (angle(data_fft)/pi)[1:(next_pow_2/2+1)]              # phase in units of pi for each fq
+	
+	#out
+	fq_pw = data.frame(fq=frequency_labels, power=frequency_magnitude, phase=phase)
+	attr(fq_pw, 'sampling_fq') = sampling_fq                          # store fq as an attr
+	
+	return(fq_pw)
+}
 
-# fft
-s = spectrum( data_ts, log="dB", ylim=c(0, 40), xlim=c(0,10), detrend=F, demean=F, taper=0, main="Periodogram", sub=NA)
-f_p = data.frame(fq=s$freq, pw=s$spec)
-max_power_i = which(f_p$pw == max(f_p$pw))
-max_fq = f_p$fq[max_power_i]
-max_power = f_p$pw[max_power_i]
+fft_peaks = function(fft_in, threshold = 1, distance = 10, filter_type='none'){
+	
+	# fft_in = dfft
+	# threshold = 1
+	# distance = 2
+	
+	if(filter_type=='none'){ fft_in$hp = fft_in$power }
+	if(filter_type=='ma'){ fft_in$hp = fft_in$power - filter(fft_in$power,c(rep(1, 3))/3)  } # moving average of 3 samples
+	if(filter_type=='lowess'){ fft_in$hp = fft_in$power - lowess(fft_in$power, f=.3)$y }  #lowess(fft_in$power, f=.3)$y 
+	#if(filter_type=='bw'){ fft_in$hp = filter( butter(4, 0.1, 'high'),fft_in$power) } # uses butterworth filter from signal package for hp > ".1"fq (not really hz)
+	
+	peaks = which(scale(fft_in$hp) > threshold) # magic threshold for n*std.dev > mean
+	fq_pw = data.frame(fq=fft_in$fq[peaks], power=fft_in$power[peaks], phase=fft_in$phase[peaks])
+	
+	# remove peaks near each other (specified by distance)
+	fq_pw = fq_pw[order(fq_pw$power, decreasing=T),] # sort by power
+	
+	# if there's more than 1 row in the peaks
+	if(nrow(fq_pw) > 1){
+		# start with nothing
+		peaks_to_remove = c()
+		
+		# for each row (1 less than the total since the inner loop will reach total)
+		for(i in 1:(nrow(fq_pw)-1)){
+			
+			# for the next row to total
+			# since the power is sorted, the next value will be smaller and thus less important of a peak
+			for(k in (i+1):nrow(fq_pw)){
+				# compute abs distance
+				dist_i_k = abs(fq_pw[i,'fq'] - fq_pw[k,'fq'])
+				
+				# if the distance is smaller than the set distance threshold
+				if(dist_i_k < distance){
+					#add the row index to the array
+					peaks_to_remove = append(peaks_to_remove, k)
+				}
+			}
+		}
+		
+		# if theres rows to remove
+		if(length(peaks_to_remove) > 0){
+			# remove rows
+			fq_pw = fq_pw[-c(unique(peaks_to_remove)),]
+		}
+	}
+	
+	return(fq_pw)
+	
+	#fq_pw = list() 
+	#power_peaks = which(scale(fft_in$power) > threshold) # magic threshold for n*std.dev > mean
+	#phase_peaks = which(scale(fft_in$phase) > threshold)
+	#fq_pw[[1]] = data.frame(fq=fft_in$fq[power_peaks], power=fft_in$power[power_peaks])
+	#fq_pw[[2]] = data.frame(fq=fft_in$fq[phase_peaks], phase=fft_in$phase[phase_peaks])
+	#fq_pw[[2]] = data.frame(fq=fft_in$fq[power_peaks], phase=fft_in$phase[power_peaks])
+}
 
-# peaks
-f_p_peaks = f_p$pw - lowess(f_p$pw, f=.3)$y # substracts the moving average (lowess interpolation) for a cheap highpass
-plot(f_p_peaks, type="l")
-peaks = which(scale(f_p_peaks) > .5) # magic threshold for n*std.dev > mean
-spectrum( data_ts, log="dB", ylim=c(0, 40), xlim=c(0,10), detrend=F, demean=F, taper=0, main="Periodogram", sub=NA)
-points(f_p$fq[peaks],10*log10(f_p$pw[peaks]), col='red')
+plot_resampled_fft_peaks = function(data_in, threshold = 1, distance = 10, filter_type='none'){
+	resampled_data = resample(data_in)
+	dfft = simple_fft(resampled_data)
+	dfft_peaks = fft_peaks(dfft, threshold, distance, filter_type)
+	
+	print("FFT")
+	print(dfft)
+	print("PEAKS")
+	print(dfft_peaks)
+	
+	# plot
+	par(mfrow=c(4,1), mar=c(2,4,2,2))
+	
+	# data
+	plot(data_in$time, data_in$signal, xlab='time (sec)', ylab='Signal', type='l')
+	title('Raw Signal')
+	
+	# resampled data
+	plot(resampled_data$time, resampled_data$signal, xlab='time (sec)', ylab='Signal', type='l')
+	title('Resampled Signal')
+	
+	# fft
+	plot(dfft$fq, dfft$power, type='l', xlab='Frequency (Hz)', ylab='Power (dB)') 
+	title('Single-Sided Power Spectrum with Peaks')
+	points(dfft_peaks$fq, dfft_peaks$power, col='red')
+	
+	# phase
+	plot(dfft$fq, dfft$phase, type='l', xlab='Frequency (Hz)', ylab='Phase (pi)') 
+	title('Single-Sided Phase for Each Frequency with Peaks')
+	points(dfft_peaks$fq, dfft_peaks$phase, col='red')
+}
 
-# plot orig vs fft
-par(mfrow=c(2,1))
-plot(data_ts, type="l", col = 'red', main='warped + resampled + timeseries')
-spectrum( data_ts, log="dB", ylim=c(0, 40), xlim=c(0,10), detrend=F, demean=F, taper=0, main="Periodogram", sub=NA)
+generate_sample_data = function(frequency_vector, weight_vector){
+	# example
+	sample_fq = 1000                                              # sampling frequency
+	sample_interval = 1/sample_fq                                 # sample time
+	sample_duration = 1000                                        # sample duration (length of signal)
 
-# fit a series of sine waves
-hz_wave = function(oscillation_hz, duration, sample_hz=2) return (sin(head(seq(0,duration,by=1/sample_hz),-1)*2*pi*oscillation_hz))
-#sin_fit = hz_wave(max_fq, (max(time_v)-min(time_v))/1000, sample_fq)*4 + mean(data_ts)
-sin_fit = 0
-for(i in 1:length(peaks)){ sin_fit = sin_fit + hz_wave(f_p$fq[peaks[i]], (max(time_v)-min(time_v))/1000, sample_fq) }
+	sample_time_vector = (0:sample_duration) * sample_interval  # sample time vector
+	# hz_50 = 0.7*sin(2*pi*50*sample_time_vector)                   # 50 Hz sinusoid
+	# hz_120 = sin(2*pi*120*sample_time_vector)                     # 120 Hz sinusoid
+	
+	sample_data = sample_time_vector*0
+	for(i in 1:length(frequency_vector)){
+		w = weight_vector[i]
+		fq = frequency_vector[i]
+		sample_data = sample_data + w*sin(2*pi*fq*sample_time_vector)
+		print(w)
+	}
+	
+	#gaussian_noise = 2*randn(size(sample_time_vector))            # noise
 
-# plot processing steps
-par(mfrow=c(5,1), mar=c(2,4,2,2))
-plot(sensor_v, type='l', main='raw')
-plot(time_v, sensor_v, type='l', col = 'blue', main='warped')
-plot(data_ts, type="l", col = 'red', main='warped + resampled timeseries')
-spectrum( data_ts, log="dB", ylim=c(0, 40), xlim=c(0,10), detrend=F, demean=F, taper=0, main="Periodogram", sub=NA)
-points(f_p$fq[peaks],10*log10(f_p$pw[peaks]), col='red')
-plot(data_ts, type="l", col = 'black', main='predicted waveform')
-lines(seq(0, attr(data_ts,'tsp')[2	], length.out = length(data_ts)), sin_fit*4 + mean(data_ts), col = 'red') # plot fitted sine wave
+	#sample_data = hz_50 + hz_120
+	sample_data = data.frame(time=sample_time_vector*1000, signal=sample_data)
+	return(sample_data)
+}
 
+import_pulseox_data = function(){
+	time_v = c()
+	sensor_v = c()
+	for(f in list.files()){ 
+		f_split = strsplit(f, split="_")[[1]]
+		frame = as.numeric(f_split[2])
+		sensor = as.numeric(f_split[4])
+		# Workaround for windows creating another file.
+		if(f_split[1] == "Thumbs.db")
+		{
+			next
+		}	
+		time_v = append(time_v, frame); 
+		sensor_v = append(sensor_v, sensor); 
+	}
+	pulseox_data = data.frame(time=time_v, signal=sensor_v)
+	return(pulseox_data)
+}
 
-require('pracma')
+# test case
+sample_data = generate_sample_data(c(50, 120), c(.7, 1))
+plot_resampled_fft_peaks(sample_data, 1, 5, 'none')
 
-Fs = 1000;                    #Sampling frequency
-T = 1/Fs;                     #Sample time
-L = 1000;                     #Length of signal
-t = (0:L-1)*T;                #Time vector
+pulseox_data = import_pulseox_data()
+plot_resampled_fft_peaks(pulseox_data, 1, .1, 'lowess')
 
-# Sum of a 50 Hz sinusoid and a 120 Hz sinusoid
-x = 0.7*sin(2*pi*50*t) + sin(2*pi*120*t); 
-y = x + 2*randn(size(t));     # Sinusoids plus noise
-
-NFFT = 2^nextpow2(L); # Next power of 2 from length of y
-Y = fft(y,NFFT)/L;
-f = Fs/2*linspace(0,1,NFFT/2+1);
-
-# plot signal
-plot(Fs*t[1:50],y[1:50], xlab='time (milliseconds)', type='l')
-title('Signal Corrupted with Zero-Mean Random Noise')
-
-# Plot single-sided amplitude spectrum.
-plot(f,2*abs(Y[1:(NFFT/2+1)]), type='l', xlab='Frequency (Hz)', ylab='|Y(f)|') 
-title('Single-Sided Amplitude Spectrum of y(t)')
-
-
-
-
-
-
-x = hz_wave(1, 4, 20)
-NFFT = 2^nextpow2(length(x))
-f = 20/2*linspace(0,1,NFFT/2+1)
-
-
-# 
-y = exp(2*pi*fft(1:4))
-x = 1:4
-
-
-
-fft(x)
-
-
-xf = fft(fft(x), inverse = TRUE)/length(x)
-lx = 1:length(x)
-plot(lx, x, type='l')
-lines(lx, xf, type='l', col='red')
-
-
-n <- 2**16
-x <- rnorm(n)
-p <- planFFT(n)
-y <- FFT(x, plan=p)
-
-
+# resampled_data = resample(pulseox_data)
+# dfft = simple_fft(resampled_data)
+# dfft_peaks = fft_peaks(dfft,1, .1)
 
 
 

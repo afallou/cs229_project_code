@@ -1,18 +1,22 @@
 # pipeline
-
 require('pracma')
 require('fftw')
+#requre('signal')
+
 
 resample = function(data_in, sampling_fq=-1, time_col='time', signal_col='signal'){
 	# purpose: interpolate data into a new timeseries with regular intervals
 	# input: data_in = data frame with time and signal columns
-	#        time_col (optional) = name of the time column
+	#        time_col (optional) = name of the time column, expects millisecond integers!!
 	#        signal_col (optional) = name of the signal column
 	#        fq (optional) = desired sampling rate
 	# output: interpolated data frame with time and signal columns
 	
 	# input
-	data_in = sample_data
+	# data_in = pulseox_data
+# 	sampling_fq=-1
+# 	time_col='time'
+# 	signal_col='signal'
 	time_v = data_in[,time_col]
 	data_v = data_in[,signal_col]
 	
@@ -33,8 +37,11 @@ resample = function(data_in, sampling_fq=-1, time_col='time', signal_col='signal
 	# estimate duration of input and output signal via median interval
 	t_l = length(time_v)
 	t_l_n = length(time_new)
-	sample_fq_raw = (max(time_v) - min(time_v))/ median(time_v[2:t_l] - time_v[1:(t_l-1)])
-	sample_fq_resampled = (max(time_new) - min(time_new))/ median(time_new[2:t_l_n] - time_new[1:(t_l_n-1)])
+	sample_fq_raw = 1000/median(time_v[2:t_l] - time_v[1:(t_l-1)])
+	sample_fq_resampled = 1000/median(time_new[2:t_l_n] - time_new[1:(t_l_n-1)])
+	# sample_fq_raw = (max(time_v) - min(time_v))/ median(time_v[2:t_l] - time_v[1:(t_l-1)])
+	# sample_fq_resampled = (max(time_new) - min(time_new))/ median(time_new[2:t_l_n] - time_new[1:(t_l_n-1)])
+	
 	attr(out, 'sampling_fq_raw') = sample_fq_raw
 	attr(out, 'sampling_fq') = sample_fq_resampled
 	
@@ -65,6 +72,7 @@ simple_fft = function(signal_in, sampling_fq=-1){
 	# frequency
 	frequency_labels = sampling_fq/2*linspace(0,1,next_pow_2/2+1)   # frequency labels (ex. for plot)
 	frequency_magnitude = 2*abs(data_fft[1:(next_pow_2/2+1)])     # frequency magnitude
+	frequency_magnitude[1] = 0 # hack for now
 	
 	# phase
 	phase = (angle(data_fft)/pi)[1:(next_pow_2/2+1)]              # phase in units of pi for each fq
@@ -76,12 +84,18 @@ simple_fft = function(signal_in, sampling_fq=-1){
 	return(fq_pw)
 }
 
-fft_peaks = function(fft_in, threshold = 1, distance = 10){
+fft_peaks = function(fft_in, threshold = 1, distance = 10, filter_type='none'){
 	
 	# fft_in = dfft
 	# threshold = 1
 	# distance = 2
-	peaks = which(scale(fft_in$power) > threshold) # magic threshold for n*std.dev > mean
+	
+	if(filter_type=='none'){ fft_in$hp = fft_in$power }
+	if(filter_type=='ma'){ fft_in$hp = fft_in$power - filter(fft_in$power,c(rep(1, 3))/3)  } # moving average of 3 samples
+	if(filter_type=='lowess'){ fft_in$hp = fft_in$power - lowess(fft_in$power, f=.3)$y }  #lowess(fft_in$power, f=.3)$y 
+	#if(filter_type=='bw'){ fft_in$hp = filter( butter(4, 0.1, 'high'),fft_in$power) } # uses butterworth filter from signal package for hp > ".1"fq (not really hz)
+	
+	peaks = which(scale(fft_in$hp) > threshold) # magic threshold for n*std.dev > mean
 	fq_pw = data.frame(fq=fft_in$fq[peaks], power=fft_in$power[peaks], phase=fft_in$phase[peaks])
 	
 	# remove peaks near each other (specified by distance)
@@ -126,10 +140,10 @@ fft_peaks = function(fft_in, threshold = 1, distance = 10){
 	#fq_pw[[2]] = data.frame(fq=fft_in$fq[power_peaks], phase=fft_in$phase[power_peaks])
 }
 
-plot_resampled_fft_peaks = function(data_in){
+plot_resampled_fft_peaks = function(data_in, threshold = 1, distance = 10, filter_type='none'){
 	resampled_data = resample(data_in)
 	dfft = simple_fft(resampled_data)
-	dfft_peaks = fft_peaks(dfft)
+	dfft_peaks = fft_peaks(dfft, threshold, distance, filter_type)
 	
 	print("FFT")
 	print(dfft)
@@ -158,23 +172,60 @@ plot_resampled_fft_peaks = function(data_in){
 	points(dfft_peaks$fq, dfft_peaks$phase, col='red')
 }
 
+generate_sample_data = function(frequency_vector, weight_vector){
+	# example
+	sample_fq = 1000                                              # sampling frequency
+	sample_interval = 1/sample_fq                                 # sample time
+	sample_duration = 1000                                        # sample duration (length of signal)
 
-# example
-sample_fq = 1000                                              # sampling frequency
-sample_interval = 1/sample_fq                                 # sample time
-sample_duration = 1000                                        # sample duration (length of signal)
+	sample_time_vector = (0:sample_duration) * sample_interval  # sample time vector
+	# hz_50 = 0.7*sin(2*pi*50*sample_time_vector)                   # 50 Hz sinusoid
+	# hz_120 = sin(2*pi*120*sample_time_vector)                     # 120 Hz sinusoid
+	
+	sample_data = sample_time_vector*0
+	for(i in 1:length(frequency_vector)){
+		w = weight_vector[i]
+		fq = frequency_vector[i]
+		sample_data = sample_data + w*sin(2*pi*fq*sample_time_vector)
+		print(w)
+	}
+	
+	#gaussian_noise = 2*randn(size(sample_time_vector))            # noise
 
-sample_time_vector = (0:sample_duration-1) * sample_interval  # sample time vector
-hz_50 = 0.7*sin(2*pi*50*sample_time_vector)                   # 50 Hz sinusoid
-hz_120 = sin(2*pi*120*sample_time_vector)                     # 120 Hz sinusoid
-gaussian_noise = 2*randn(size(sample_time_vector))            # noise
-sample_data = hz_50 + hz_120
-sample_data = data.frame(time=sample_time_vector, signal=sample_data)
+	#sample_data = hz_50 + hz_120
+	sample_data = data.frame(time=sample_time_vector*1000, signal=sample_data)
+	return(sample_data)
+}
 
-plot_resampled_fft_peaks(sample_data)
+import_pulseox_data = function(){
+	time_v = c()
+	sensor_v = c()
+	for(f in list.files()){ 
+		f_split = strsplit(f, split="_")[[1]]
+		frame = as.numeric(f_split[2])
+		sensor = as.numeric(f_split[4])
+		# Workaround for windows creating another file.
+		if(f_split[1] == "Thumbs.db")
+		{
+			next
+		}	
+		time_v = append(time_v, frame); 
+		sensor_v = append(sensor_v, sensor); 
+	}
+	pulseox_data = data.frame(time=time_v, signal=sensor_v)
+	return(pulseox_data)
+}
 
+# test case
+sample_data = generate_sample_data(c(50, 120), c(.7, 1))
+plot_resampled_fft_peaks(sample_data, 1, 5, 'none')
 
+pulseox_data = import_pulseox_data()
+plot_resampled_fft_peaks(pulseox_data, 1, .1, 'lowess')
 
-# resampled_data = resample(sample_data)
+# resampled_data = resample(pulseox_data)
 # dfft = simple_fft(resampled_data)
-# dfft_peaks = fft_peaks(dfft)
+# dfft_peaks = fft_peaks(dfft,1, .1)
+
+
+
