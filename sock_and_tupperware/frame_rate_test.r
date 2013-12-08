@@ -1,22 +1,63 @@
-# interpolate
-# purpose: convert time_v into a new timeseries with regular intervals
-#t_new = seq(min(time_v), max(time_v), length.out = length(time_v))
-# old interpolation steps
-# t_s_interpolated = approx( x = time_v, y = sensor_v, xout = t_new )  # the interpolation step
-# t_s_interpolated$x = t_s_interpolated$x - min(t_s_interpolated$x)  # remove time offset so it starts a 0
-# calculate offset
-# time_v_delta = time_v[2:length(time_v)] - time_v[1:(length(time_v)-1)]
+# ---------------------------------------------------------------------------------------
+# global
 
-
-# import
-#setwd('/Users/dderiso/Math/cs229/project/cs229_project_code/sock_and_tupperware/nullimages')
-setwd('C:/Users/Neeloy/Documents/GitHub/cs229_project_code/sock_and_tupperware/nullimages')
-
-# pipeline
 require('pracma')
 require('fftw')
 #requre('signal')
 
+#setwd('/Users/dderiso/Math/cs229/project/cs229_project_code/sock_and_tupperware/nullimages')
+#setwd('C:/Users/Neeloy/Documents/GitHub/cs229_project_code/sock_and_tupperware/nullimages')
+
+# ---------------------------------------------------------------------------------------
+# functions
+
+# import/generate data
+
+generate_sample_data = function(frequency_vector, weight_vector){
+	# example
+	sample_fq = 1000                                              # sampling frequency
+	sample_interval = 1/sample_fq                                 # sample time
+	sample_duration = 1000                                        # sample duration (length of signal)
+
+	sample_time_vector = (0:sample_duration) * sample_interval  # sample time vector
+	# hz_50 = 0.7*sin(2*pi*50*sample_time_vector)                   # 50 Hz sinusoid
+	# hz_120 = sin(2*pi*120*sample_time_vector)                     # 120 Hz sinusoid
+	
+	sample_data = sample_time_vector*0
+	for(i in 1:length(frequency_vector)){
+		w = weight_vector[i]
+		fq = frequency_vector[i]
+		sample_data = sample_data + w*sin(2*pi*fq*sample_time_vector)
+		print(w)
+	}
+	
+	#gaussian_noise = 2*randn(size(sample_time_vector))            # noise
+
+	#sample_data = hz_50 + hz_120
+	sample_data = data.frame(time=sample_time_vector*1000, signal=sample_data)
+	return(sample_data)
+}
+
+import_pulseox_data = function(){
+	time_v = c()
+	sensor_v = c()
+	for(f in list.files()){ 
+		f_split = strsplit(f, split="_")[[1]]
+		frame = as.numeric(f_split[2])
+		sensor = as.numeric(f_split[4])
+		# Workaround for windows creating another file.
+		if(f_split[1] == "Thumbs.db")
+		{
+			next
+		}	
+		time_v = append(time_v, frame); 
+		sensor_v = append(sensor_v, sensor); 
+	}
+	pulseox_data = data.frame(time=time_v, signal=sensor_v)
+	return(pulseox_data)
+}
+
+# preprocess
 
 resample = function(data_in, sampling_fq=-1, time_col='time', signal_col='signal'){
 	# purpose: interpolate data into a new timeseries with regular intervals
@@ -62,6 +103,8 @@ resample = function(data_in, sampling_fq=-1, time_col='time', signal_col='signal
 	return(out)
 }
 
+# fft
+
 simple_fft = function(signal_in, sampling_fq=-1){
 	# purpose: perform a one-sided fft and return phase and fq
 	# input: signal_in = signal vector
@@ -97,6 +140,8 @@ simple_fft = function(signal_in, sampling_fq=-1){
 	
 	return(fq_pw)
 }
+
+# peaks
 
 fft_peaks = function(fft_in, threshold = 1, distance = 10, filter_type='none'){
 	
@@ -154,6 +199,8 @@ fft_peaks = function(fft_in, threshold = 1, distance = 10, filter_type='none'){
 	#fq_pw[[2]] = data.frame(fq=fft_in$fq[power_peaks], phase=fft_in$phase[power_peaks])
 }
 
+# plots
+
 plot_resampled_fft_peaks = function(data_in, threshold = 1, distance = 10, filter_type='none'){
 	resampled_data = resample(data_in)
 	dfft = simple_fft(resampled_data)
@@ -186,49 +233,15 @@ plot_resampled_fft_peaks = function(data_in, threshold = 1, distance = 10, filte
 	points(dfft_peaks$fq, dfft_peaks$phase, col='red')
 }
 
-generate_sample_data = function(frequency_vector, weight_vector){
-	# example
-	sample_fq = 1000                                              # sampling frequency
-	sample_interval = 1/sample_fq                                 # sample time
-	sample_duration = 1000                                        # sample duration (length of signal)
+# svm
 
-	sample_time_vector = (0:sample_duration) * sample_interval  # sample time vector
-	# hz_50 = 0.7*sin(2*pi*50*sample_time_vector)                   # 50 Hz sinusoid
-	# hz_120 = sin(2*pi*120*sample_time_vector)                     # 120 Hz sinusoid
-	
-	sample_data = sample_time_vector*0
-	for(i in 1:length(frequency_vector)){
-		w = weight_vector[i]
-		fq = frequency_vector[i]
-		sample_data = sample_data + w*sin(2*pi*fq*sample_time_vector)
-		print(w)
-	}
-	
-	#gaussian_noise = 2*randn(size(sample_time_vector))            # noise
-
-	#sample_data = hz_50 + hz_120
-	sample_data = data.frame(time=sample_time_vector*1000, signal=sample_data)
-	return(sample_data)
+rmse = function(error_in){ 
+	return(sqrt(mean(error_in^2, na.rm=T))) 
 }
 
-import_pulseox_data = function(){
-	time_v = c()
-	sensor_v = c()
-	for(f in list.files()){ 
-		f_split = strsplit(f, split="_")[[1]]
-		frame = as.numeric(f_split[2])
-		sensor = as.numeric(f_split[4])
-		# Workaround for windows creating another file.
-		if(f_split[1] == "Thumbs.db")
-		{
-			next
-		}	
-		time_v = append(time_v, frame); 
-		sensor_v = append(sensor_v, sensor); 
-	}
-	pulseox_data = data.frame(time=time_v, signal=sensor_v)
-	return(pulseox_data)
-}
+
+# ---------------------------------------------------------------------------------------
+# import, preprocess, plot
 
 # test case
 sample_data = generate_sample_data(c(50, 120), c(.7, 1))
@@ -241,6 +254,41 @@ plot_resampled_fft_peaks(pulseox_data, 1, .1, 'lowess')
 # dfft = simple_fft(resampled_data)
 # dfft_peaks = fft_peaks(dfft,1, .1)
 
+# ---------------------------------------------------------------------------------------
+# train svm
+
+require('e1071')
+
+# training
+training_features = c() # feature vector (input)
+training_labels = c() # ground truth (desired output)
+training_data = data.frame(features=training_features, labels=training_labels)
+
+# cross validation
+cv_features = c() # feature vector (input)
+cv_labels = c() # ground truth (desired output)
+cv_data = data.frame(features=training_features, labels=training_labels)
+
+# formula
+formula = as.formula(labels~features)
+
+# glm model
+glm_model = glm(formula, data=training_data, family="gaussian")
+predict_glm = predict.lm(glm_model, features)
+rmse_t_glm = rmse(predict_glm - labels)
+
+# cross validation
+predict_cv_glm = predict.lm(glm_model, cv_features)
+rmse_cv_glm = rmse(predict_cv_glm - cv_labels)
+
+# svm model
+svm_model = svm(formula, data=training_data, type="eps-regression")
+predict_svm = predict.lm(svm_model, features)
+rmse_t_svm = rmse(predict_svm - labels)
+
+# cross validation
+predict_cv_svm = predict.lm(svm_model, cv_features)
+rmse_cv_svm = rmse(predict_cv_svm - cv_labels)
 
 
 
