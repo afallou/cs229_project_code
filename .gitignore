@@ -5,3 +5,5 @@ videos/output/dont_commit/
 .synctex.gz
 .pdf
 .aux
+Thumbs.db
+.mat
