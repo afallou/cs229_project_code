@@ -255,6 +255,111 @@ plot_resampled_fft_peaks(pulseox_data, 1, .1, 'lowess')
 # dfft_peaks = fft_peaks(dfft,1, .1)
 
 # ---------------------------------------------------------------------------------------
+
+# install.packages('bmp', dependencies=T)
+# install.packages('pixmap', dependencies=T)
+require('bmp')
+require('pixmap')
+
+#install.packages('r-opencv', dependencies=T)
+
+par(mfrow=c(5,5), mar=c(0,0,0,0))
+image_files = list.files(pattern=".bmp")
+
+# ---------------------------------------------------------------------------------------
+# plot images
+
+w = c(.7, .3) * size(im1)[1]
+h = c(.22, .4) * size(im1)[2]
+w = w[1]:w[2]
+h = h[1]:h[2]
+
+for(i in 1:25){
+	im = read.bmp(image_files[i], Verbose = FALSE)
+	image(t(as.matrix(im[w,h,1])), xaxt='n', ann=FALSE, yaxt='n')
+}
+
+# ---------------------------------------------------------------------------------------
+# import image matricies
+
+ps = function(...) paste(..., sep="")
+p = function(...) cat(ps(..., '\n'))
+
+save_data = function(data_in, f_name_in){
+	f_name = ps(f_name_in, ".csv")
+	write.table(data_in, f_name, col.names = T, row.names=F, quote=F, sep=",")
+	system(ps("gzip ", f_name))
+	p('saving', " ", f_name_in, "...")
+}	
+
+# import images as matricies, extract r channel, extract face, store in list
+im_list = list()
+for(i in 1:length(image_files)){
+	im = read.bmp(image_files[i], Verbose = FALSE)
+	im_mat = as.matrix(im[w,h,1])
+	im_list[[i]] = im_mat
+}
+save_data(im_list, "im")
+
+# import images as matricies, extract r channel, extract face, store in 3D matrix
+im3d = array(1, dim=c(length(w), length(h), length(image_files)))
+for(i in 1:length(image_files)){
+	im = read.bmp(image_files[i], Verbose = FALSE)
+	im3d[,,i] = as.matrix(im[w,h,1])
+}
+save_data(im3d, "im3d")
+
+
+# ---------------------------------------------------------------------------------------
+
+load_multicore_libs = function() {
+	require(foreach)
+	require(doMC)
+	require(plyr)
+	registerDoMC(cores=8) #registers half the number of cores in the system, unless otherwise specified
+	cores = getDoParWorkers() #prints out the number of cores sanity check
+	print(paste("You're now rocking with ", cores, " cores", sep=""))
+	
+	# system.time(foreach(i = 1:10000,.combine = "cbind") %do% { sum(rnorm(10000)) }) 		# without parallel
+	# system.time(foreach(i = 1:10000,.combine = "cbind") %dopar% { sum(rnorm(10000)) })	# with parallel
+}
+
+load_plot_libs = function(){
+	require(ggplot2)
+	require(reshape2)
+	require(plyr)
+	require(grid)
+
+	load_multicore_libs()
+}
+
+load_plot_libs()
+
+# ---------------------------------------------------------------------------------------
+
+# look at single pixel
+plot(im3d[1,,], type="l")
+
+# look at a single image in the list
+image(t(im3d[,,1]))
+
+# look at all pixels in a row
+im_col = t(im3d[1,,])
+nrow(im_col) == length(image_files) # check that the rows down a column correspond to time
+
+# plot each of the pixels in the column independently
+mt = melt(im_col)
+colnames(mt) = c("time", "pixel", "value")
+ggplot(mt, aes(time, value, group=pixel, color=pixel)) + geom_line()
+
+# plot the mean
+plot(rowMeans(im_col), type='l')
+
+# ---------------------------------------------------------------------------------------
+
+
+
+# ---------------------------------------------------------------------------------------
 # train svm
 
 require('e1071')
