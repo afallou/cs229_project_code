@@ -3,12 +3,12 @@
 % [video_matrix, resampling_rate, pulseox_resampled] = process_images('/Users/adrien/Dropbox/Stanford/Massive big data/cs229_project_code/sock_and_tupperware/nullimages/');
 % load('vid_bmp.mat');
 
-full_video_matrix = video_matrix;
-video_matrix = video_matrix(100:260, 140:260, :, :);
+% full_video_matrix = video_matrix;
+% video_matrix = video_matrix(100:260, 140:260, :, :);
 
 COLOR_CHANNELS_COUNT = 3;
-THRESHOLD_VIDEO = 0;
-THRESHOLD_PULSEOX = 0;
+THRESHOLD_VIDEO = 500;
+THRESHOLD_PULSEOX = 200;
 
 video_fft = fft(video_matrix, [], 3);
 video_width = size(video_fft, 2);
@@ -31,4 +31,4 @@ parfor i = 1:total_pixel_count
 	feature_vectors(i, :) = [binarized_video(i, :, 1), binarized_video(i, :, 2), binarized_video(i, :, 3)];
 end
 
-binned_pulseox = binned_feature_vectors(fft(pulseox_resampled), THRESHOLD_PULSEOX);
+binned_pulseox = binned_feature_vectors(abs(fft(pulseox_resampled)), THRESHOLD_PULSEOX);
