@@ -41,15 +41,10 @@ generate_sample_data = function(frequency_vector, weight_vector){
 import_pulseox_data = function(){
 	time_v = c()
 	sensor_v = c()
-	for(f in list.files()){ 
+	for(f in list.files(pattern=".bmp")){ 
 		f_split = strsplit(f, split="_")[[1]]
 		frame = as.numeric(f_split[2])
 		sensor = as.numeric(f_split[4])
-		# Workaround for windows creating another file.
-		if(f_split[1] == "Thumbs.db")
-		{
-			next
-		}	
 		time_v = append(time_v, frame); 
 		sensor_v = append(sensor_v, sensor); 
 	}
@@ -239,7 +234,6 @@ rmse = function(error_in){
 	return(sqrt(mean(error_in^2, na.rm=T))) 
 }
 
-
 # ---------------------------------------------------------------------------------------
 # import, preprocess, plot
 
@@ -284,7 +278,6 @@ for(i in 1:25){
 
 ps = function(...) paste(..., sep="")
 p = function(...) cat(ps(..., '\n'))
-
 save_data = function(data_in, f_name_in){
 	f_name = ps(f_name_in, ".csv")
 	write.table(data_in, f_name, col.names = T, row.names=F, quote=F, sep=",")
@@ -354,6 +347,10 @@ ggplot(mt, aes(time, value, group=pixel, color=pixel)) + geom_line()
 
 # plot the mean
 plot(rowMeans(im_col), type='l')
+
+
+
+plot_resampled_fft_peaks(rowMeans(im_col), 1, .1, 'lowess')
 
 # ---------------------------------------------------------------------------------------
 
