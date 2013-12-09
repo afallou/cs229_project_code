@@ -38,6 +38,34 @@ generate_sample_data = function(frequency_vector, weight_vector){
 	return(sample_data)
 }
 
+generate_sample_data_with_phase = function(frequency_vector, weight_vector, phase_vector){
+	# example
+	sample_fq = 1000                                              # sampling frequency
+	sample_interval = 1/sample_fq                                 # sample time
+	sample_duration = 1000                                        # sample duration (length of signal)
+
+	sample_time_vector = (0:sample_duration) * sample_interval  # sample time vector
+	# hz_50 = 0.7*sin(2*pi*50*sample_time_vector)                   # 50 Hz sinusoid
+	# hz_120 = sin(2*pi*120*sample_time_vector)                     # 120 Hz sinusoid
+
+	sample_phase_vector = (0:sample_duration)*0 + 1 				# Create vector of ones
+	
+	sample_data = sample_time_vector*0								# Creates vector of zeros
+	for(i in 1:length(frequency_vector)){
+		w = weight_vector[i]
+		fq = frequency_vector[i]
+		ph = phase_vector[i]
+		sample_data = sample_data + w*sin(2*pi*fq*sample_time_vector + ph*sample_phase_vector) 	# Have included phase
+		print(w)
+	}
+	
+	#gaussian_noise = 2*randn(size(sample_time_vector))            # noise
+
+	#sample_data = hz_50 + hz_120
+	sample_data = data.frame(time=sample_time_vector*1000, signal=sample_data)
+	return(sample_data)
+}
+
 import_pulseox_data = function(){
 	time_v = c()
 	sensor_v = c()
@@ -239,6 +267,7 @@ rmse = function(error_in){
 
 # test case
 sample_data = generate_sample_data(c(50, 120), c(.7, 1))
+sample_data_plus_phase = generate_sample_data_with_phase(c(50,120), c(.7,1), c(0, 1.6))
 plot_resampled_fft_peaks(sample_data, 1, 5, 'none')
 
 pulseox_data = import_pulseox_data()
