@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  7 DEC 2013 22:14
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  8 DEC 2013 15:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -391,20 +391,18 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <35.83> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <29.86> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 127.
 
-<images/flow_chart_for_processing_3.jpg, id=2, 722.7pt x 453.695pt>
-File: images/flow_chart_for_processing_3.jpg Graphic file (type jpg)
+<images/flow_chart_1.jpg, id=2, 722.7pt x 542.025pt>
+File: images/flow_chart_1.jpg Graphic file (type jpg)
 
-<use images/flow_chart_for_processing_3.jpg>
-Package pdftex.def Info: images/flow_chart_for_processing_3.jpg used on input l
-ine 129.
-(pdftex.def)             Requested size: 722.69823pt x 453.6939pt.
+<use images/flow_chart_1.jpg>
+Package pdftex.def Info: images/flow_chart_1.jpg used on input line 129.
+(pdftex.def)             Requested size: 722.69823pt x 542.02367pt.
 
-<images/flow_chart_for_processing_2.png, id=3, 722.7pt x 542.025pt>
-File: images/flow_chart_for_processing_2.png Graphic file (type png)
+<images/flow_chart_2.jpg, id=3, 722.7pt x 542.025pt>
+File: images/flow_chart_2.jpg Graphic file (type jpg)
 
-<use images/flow_chart_for_processing_2.png>
-Package pdftex.def Info: images/flow_chart_for_processing_2.png used on input l
-ine 131.
+<use images/flow_chart_2.jpg>
+Package pdftex.def Info: images/flow_chart_2.jpg used on input line 131.
 (pdftex.def)             Requested size: 722.69823pt x 542.02367pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 131--133
@@ -450,28 +448,28 @@ No file poster.bbl.
 
 Non-PDF special ignored!
 Non-PDF special ignored!{c:/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdft
-ex.map} <./images/red_trough.png (PNG copy)> <./images/flow_chart_for_processin
-g_3.jpg> <./images/flow_chart_for_processing_2.png>] (./poster.aux) ) 
+ex.map} <./images/red_trough.png (PNG copy)> <./images/flow_chart_1.jpg> <./ima
+ges/flow_chart_2.jpg>] (./poster.aux) ) 
 Here is how much of TeX's memory you used:
  4877 strings out of 493308
- 71723 string characters out of 6141366
+ 71573 string characters out of 6141366
  183386 words of memory out of 5000000
  8240 multiletter control sequences out of 15000+600000
  28027 words of font info for 60 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,8n,38p,811b,968s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/texliv
-e/2013/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2013/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2013/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmmi12.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr17.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-sy10.pfb><c:/texlive/2013/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texli
-ve/2013/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2013/texmf-dist
-/fonts/type1/urw/times/utmri8a.pfb>
-Output written on poster.pdf (1 page, 149536 bytes).
+ 38i,8n,38p,811b,1102s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/texlive/2013/texmf-dist/fonts/enc/dv
+ips/base/8r.enc}<c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
+12.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c
+:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/
+2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2013/texm
+f-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2013/texmf-dist/fonts/type1
+/urw/times/utmr8a.pfb><c:/texlive/2013/texmf-dist/fonts/type1/urw/times/utmri8a
+.pfb>
+Output written on poster.pdf (1 page, 149948 bytes).
 PDF statistics:
- 42 PDF objects out of 1000 (max. 8388607)
- 27 compressed objects within 1 object stream
+ 40 PDF objects out of 1000 (max. 8388607)
+ 26 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 
