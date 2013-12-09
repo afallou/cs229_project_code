@@ -81,9 +81,7 @@ In both developing and developed countries, reducing the cost of medical care is
  Specifically we chose to consider the largest amplitude fourier components of the time course of the data from each pixel.
  Extensive preprocessing was required on both the video data and the pulse oximeter data to enable training.
  INSERT MORE HERE WHEN WE HAVE RESULTS.
-
 \end{abstract}
-
 %----------------------------------------------------------------------------------------
 %	INTRODUCTION
 %----------------------------------------------------------------------------------------
@@ -95,7 +93,6 @@ In both developing and developed countries, reducing the cost of medical care is
 Cardiovascular health is the \emph{sin qua non} of human life. Early detection of cardiovascular disease is of paramount importance in public health. This project aims to develop a method to visualize the perfusion of blood through the skin via pulse oximetry. Pulse oximetry is a technique that exploits the fact that oxygenated and deoxygenated hemoglobin changes the color of red blood cells. The technique maps these changes in rgb color of the visible skin to the invisible presence of oxygenated vs deoxygenated blood in the local vasculature underneath the skin.
 
 Previous studies have shown that video obtained from an ordinary webcam can be used to visualize perfusion by selectively amplifying temporal frequencies in video {http://people.csail.mit.edu/mrub/vidmag/}. A study by the MIT CSAIL showed that this technique can also be used to infer heart rate from the person being taped. The present project aims to extend this work to detect the relative changes in oxygenated vs deoxygenated blood and reconstruct the pulse oximeter waveform from an ordinary webcam video.
-
 %----------------------------------------------------------------------------------------
 %	OBJECTIVES
 %----------------------------------------------------------------------------------------
@@ -109,26 +106,43 @@ Previous studies have shown that video obtained from an ordinary webcam can be u
 \item Extract pulse oximeter wave information from a pulse oximeter.
 \item Build software that can simultaneously record pulse oximeter wave values and time values while recording from a video.
 \item Estimate the number of training examples needed to implement linear regression using learning theory.
-\item Implement linear regression and the train the weight matrix for the features from the video.
-\item Test the newly learned weight matrix on further videos.
-
+\item Implement regression in a variety of ways and the train the weight matrix for the features from the video.
+\item Test the newly learned weight matrices on further videos.
+\item Create an error vs technique graph to compare techniques.
+\item Conclude with the best technique.
 \end{enumerate}
-
 %----------------------------------------------------------------------------------------
 %	Feature selection and Pre-processing
 %----------------------------------------------------------------------------------------
 
 \section*{Feature selection and pre-processing}
 
-
-
 %------------------------------------------------
 
 \subsection*{Data processing}
 
-\includegraphics{images/flow_chart_for_processing_3.jpg}
+\includegraphics{images/flow_chart_1.jpg}
+\includegraphics{images/flow_chart_2.jpg}
+\captionof{figure}{\color{Green} Chart showing the steps involved in pre-processing and summary of supervised learning methods used.}
 
-\includegraphics{images/flow_chart_for_processing_2.png}
+
+\section*{$\epsilon$-Support Vector Regression}
+
+  As well as basic stochastic gradient descent, we used $\epsilon$-Support Vector Regression.
+
+  The basic idea behind $\epsilon$-Support Vector Regression is to find a function $f(x)$ that has at most $\epsilon$ deviation from the training data $y_i$ and is also as flat as possible. We pursued a soft margin approach, which allowed us to have training examples outside of the $\epsilon$ tube at a cost.
+
+  An interesting conceptual difference between this and the Support Vector Machines is that the support vectors in our case are those that lie outside the $\epsilon$-tube. In the SVM the support vectors are those that ultimately lie closest to the classifying line. Naturally the dual optimization problem is different to the SVM optimization.
+
+  A radial basis function of the form: $exp(-\frac{||\mathbf{x} - \mathbf{x'}||_{2}^{2}}{2 \sigma ^2})$ was used as the Kernel, as is common in Machine Learning applications.
+
+  In summary, we evaluate the the Kernel function with the test data and add the dot products with relevant weights. Finally we add the constant intercept term for the final prediction.
+\\
+\\
+\\
+\\
+\\
+\\
 Nulla vel nisl sed mauris auctor mollis non sed. 
 
 \begin{equation}
