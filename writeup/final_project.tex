@@ -151,13 +151,13 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
 
 
 \section{Preprocessing}
-\subsection{Video data}
+\subsection*{Video data}
   We needed to find a way to convert a video into features.
   Our feature set initially started out vaguely; we wanted to incorporate the frequency data inherent within each pixel in the video and output frequency data about a pulse oximeter waveform.
   The three color channel intensity values through time, \(I_R(t), I_G(t), I_B(t)\) were our starting points.
   We converted the video into a four dimensional matrix of pixel location x and y, color channel and time and performed the descontruction mentioned in the previous section.
   
-\subsection{Pulse Oximeter Data}
+\subsection*{Pulse Oximeter Data}
   Pulse oximeter data was collected using an Arduino and a Pulse Oximeter connected to a laptop. 
   A program was written that started recording the pulse ox data and simultaneously started taking pictures every 50-80 ms on a webcam.
   This gave the pulse ox data corresponding to the image/video data.
@@ -172,13 +172,19 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
 
 
 \section{Results}
-  Our initial computations on the pixel-intensity data revealed, unsurprisingly,
-  that pixel intensity variation over time for a reasonably still video was not large.
-  Often a single color channel for a pixel would have a range of 3 (when it could vary from 0-255) over the whole video, even if that pixel was contained in the face.
-  The DFT of the data would produce large peaks at 0 Hz and would rapidly diminish in magnitude. Because of this, we have not had any significant linear regression results.
-  A simple solution is to subtract a mean intensity value of our pixel, so as to increase the relative intensity variations over time.
-  Ultimately, we may have to resort to using EVM-enhanced videos if our training data has signals that are too weak to pick up.
-  
+ \subsection*{Initial results}
+  The binning involved with our initial results provided too coarse a model. We could not see any features other than 
+ \subsection*{Using the normal equations}
+ Our feature matrix, \(X\), which contained the features for every training example, gave a matrix $X^TX$ with a very high condition number. This meant the normal equations were unusuable.
+ \subsection*{Limitations of our methods}
+  % Delete all this when real results are written up.
+    %Our initial computations on the pixel-intensity data revealed, unsurprisingly,
+  %that pixel intensity variation over time for a reasonably still video was not large.
+  %Often a single color channel for a pixel would have a range of 3 (when it could vary from 0-255) over the whole video, even if that pixel was contained in the face.
+  %The DFT of the data would produce large peaks at 0 Hz and would rapidly diminish in magnitude. Because of this, we have not had any significant linear regression results.
+  %A simple solution is to subtract a mean intensity value of our pixel, so as to increase the relative intensity variations over time.
+  %Ultimately, we may have to resort to using EVM-enhanced videos if our training data has signals that are too weak to pick up.
+  % ------------------------------------------------------------------
   
  \section{Conclusions}
  

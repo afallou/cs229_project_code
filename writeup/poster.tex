@@ -80,7 +80,7 @@ In both developing and developed countries, reducing the cost of medical care is
  Features were chosen to be related to the three color channel intensity values, with the idea that changing color of the video would relate to blood flow around the body.
  Specifically we chose to consider the largest amplitude fourier components of the time course of the data from each pixel.
  Extensive preprocessing was required on both the video data and the pulse oximeter data to enable training.
- INSERT MORE HERE WHEN WE HAVE RESULTS.
+
 \end{abstract}
 %----------------------------------------------------------------------------------------
 %	INTRODUCTION
@@ -112,19 +112,29 @@ Previous studies have shown that video obtained from an ordinary webcam can be u
 \item Conclude with the best technique.
 \end{enumerate}
 
-\vspace{10cm} % Inserted here to put chart on next column
+\vspace{8cm} % Inserted here to put chart on next column
 
 %----------------------------------------------------------------------------------------
 %	Feature selection and Pre-processing
 %----------------------------------------------------------------------------------------
 \section*{Feature selection and pre-processing}
-
-%------------------------------------------------
-
 \includegraphics{images/flow_chart_1.jpg}
 \includegraphics{images/flow_chart_2.jpg}
 \captionof{figure}{\color{Green} Chart showing the steps involved in pre-processing and summary of supervised learning methods used.}
-
+%----------------------------------------------------------------------------------------
+%	Results
+%----------------------------------------------------------------------------------------  
+\section*{Results}
+ $\begin{pmatrix}
+      	& \text{pixels} & \text{phase} & 	\text{fq} & 	\text{MSE} &  \text{cc\_max} &  \text{cc\_lag}  \\
+    	4 &   TRUE &  TRUE &   TRUE & 0.00884 &  0.0936 & 	-17 \\
+    	3 &   TRUE &  TRUE &  FALSE &   0.114 &  0.0943 & 	-17 \\
+    	2 &   TRUE & FALSE &   TRUE & 0.00903 &  0.0936 & 	-17 \\
+    	1 &   TRUE & FALSE &  FALSE &   0.116 &  0.0943 & 	-17 \\
+    	6 &  FALSE &  TRUE &   TRUE &  0.0115 &  0.0936 & 	-17 \\
+    	5 &  FALSE &  TRUE &  FALSE &   0.748 &  0.0967 & 	-17 \\
+    	1 &  FALSE & FALSE &  TRUE  & 0.0117  & 0.0936  &	-17 	 
+ \end{pmatrix}$
 
 
 %----------------------------------------------------------------------------------------

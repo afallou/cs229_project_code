@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  9 DEC 2013 21:33
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  10 DEC 2013 12:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -397,40 +397,39 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <35.83> not available
 File: images/flow_chart_1.jpg Graphic file (type jpg)
 
 <use images/flow_chart_1.jpg>
-Package pdftex.def Info: images/flow_chart_1.jpg used on input line 124.
+Package pdftex.def Info: images/flow_chart_1.jpg used on input line 121.
 (pdftex.def)             Requested size: 722.69823pt x 542.02367pt.
 
 <images/flow_chart_2.jpg, id=4, 542.025pt x 135.50626pt>
 File: images/flow_chart_2.jpg Graphic file (type jpg)
 
 <use images/flow_chart_2.jpg>
-Package pdftex.def Info: images/flow_chart_2.jpg used on input line 125.
+Package pdftex.def Info: images/flow_chart_2.jpg used on input line 122.
 (pdftex.def)             Requested size: 542.02367pt x 135.5059pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 124--126
+Underfull \hbox (badness 10000) in paragraph at lines 121--123
 []
  []
 
-<images/EVM_where_we_fit.png, id=5, 334.24875pt x 583.42969pt>
-File: images/EVM_where_we_fit.png Graphic file (type png)
-
-<use images/EVM_where_we_fit.png>
-Package pdftex.def Info: images/EVM_where_we_fit.png used on input line 134.
-(pdftex.def)             Requested size: 739.77165pt x 1291.49911pt.
-LaTeX Font Info:    Try loading font information for U+msa on input line 147.
-
+LaTeX Font Info:    Try loading font information for U+msa on input line 128.
 (c:/texlive/2013/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 147.
+LaTeX Font Info:    Try loading font information for U+msb on input line 128.
 
 (c:/texlive/2013/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 149.
+<images/EVM_where_we_fit.png, id=5, 334.24875pt x 583.42969pt>
+File: images/EVM_where_we_fit.png Graphic file (type png)
 
-Overfull \hbox (51.61647pt too wide) in paragraph at lines 147--156
+<use images/EVM_where_we_fit.png>
+Package pdftex.def Info: images/EVM_where_we_fit.png used on input line 144.
+(pdftex.def)             Requested size: 739.77165pt x 1291.49911pt.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 159.
+
+Overfull \hbox (51.61647pt too wide) in paragraph at lines 157--166
 [][] 
  []
 
@@ -438,25 +437,28 @@ Overfull \hbox (51.61647pt too wide) in paragraph at lines 147--156
 File: images/red_trough.png Graphic file (type png)
 
 <use images/red_trough.png>
-Package pdftex.def Info: images/red_trough.png used on input line 164.
+Package pdftex.def Info: images/red_trough.png used on input line 174.
 (pdftex.def)             Requested size: 593.39137pt x 401.61925pt.
 File: images/red_trough.png Graphic file (type png)
  <use images/red_trough.png>
-Package pdftex.def Info: images/red_trough.png used on input line 188.
+Package pdftex.def Info: images/red_trough.png used on input line 198.
 (pdftex.def)             Requested size: 593.39137pt x 401.61925pt.
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 201.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 211.
 
 
 (c:/texlive/2013/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <24.88> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 201.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 211.
  (./poster.bbl)
-Overfull \vbox (424.42621pt too high) has occurred while \output is active []
+Overfull \vbox (459.12968pt too high) has occurred while \output is active []
 
 
-Overfull \vbox (389.22299pt too high) has occurred while \output is active []
+Overfull \vbox (453.14351pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (410.02992pt too high) has occurred while \output is active []
 
 
 [1
@@ -468,22 +470,24 @@ ex.map} <./images/stanfordlogo.png> <./images/flow_chart_1.jpg> <./images/flow_
 chart_2.jpg> <./images/EVM_where_we_fit.png> <./images/red_trough.png (PNG copy
 )>] (./poster.aux) ) 
 Here is how much of TeX's memory you used:
- 4884 strings out of 493308
- 71792 string characters out of 6141366
- 178366 words of memory out of 5000000
- 8245 multiletter control sequences out of 15000+600000
- 24973 words of font info for 54 fonts, out of 8000000 for 9000
+ 4886 strings out of 493308
+ 71826 string characters out of 6141366
+ 185366 words of memory out of 5000000
+ 8247 multiletter control sequences out of 15000+600000
+ 25480 words of font info for 55 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,8n,38p,601b,1239s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,11n,38p,601b,1473s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2013/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:
-/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/
-2013/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2013/texmf-dist/fo
-nts/type1/urw/times/utmr8a.pfb><c:/texlive/2013/texmf-dist/fonts/type1/urw/time
-s/utmri8a.pfb>
-Output written on poster.pdf (1 page, 257672 bytes).
+/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/
+2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2013/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2013/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2013/texmf-dist/fonts/type1/
+urw/times/utmb8a.pfb><c:/texlive/2013/texmf-dist/fonts/type1/urw/times/utmr8a.p
+fb><c:/texlive/2013/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on poster.pdf (1 page, 283505 bytes).
 PDF statistics:
- 32 PDF objects out of 1000 (max. 8388607)
- 18 compressed objects within 1 object stream
+ 44 PDF objects out of 1000 (max. 8388607)
+ 27 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 
