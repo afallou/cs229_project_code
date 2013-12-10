@@ -49,15 +49,15 @@
 % The third is 19% wide and houses a logo for your university/organization or a photo of you
 % The widths of these boxes can be easily edited to accommodate your content as you see fit
 
-\begin{minipage}[b]{0.80\linewidth}
+\begin{minipage}[b]{0.85\linewidth}
 \veryHuge \color{NavyBlue} \textbf{Medical diagnostics over video} \color{Black}\\ % Title
 \Huge\textit{Extracting the pulse and oxygen levels in blood from video of a subject}\\[1cm] % Subtitle
 \huge \textbf{D Deriso, A Fallou \& N Banerjee}\\ % Author(s)
 %\huge University and Department Name\\ % University/organization
 \end{minipage}
 %
-\begin{minipage}[b]{0.19\linewidth}
-\includegraphics[width=20cm]{images/red_trough.png} % Logo or a photo of you, adjust its dimensions here
+\begin{minipage}[b]{0.15\linewidth}
+\includegraphics[width=15cm]{images/stanfordlogo.png} % Logo or a photo of you, adjust its dimensions here
 \end{minipage}
 
 \vspace{1cm} % A bit of extra whitespace between the header and poster content
@@ -121,8 +121,6 @@ Previous studies have shown that video obtained from an ordinary webcam can be u
 
 %------------------------------------------------
 
-\subsection*{Data processing}
-
 \includegraphics{images/flow_chart_1.jpg}
 \includegraphics{images/flow_chart_2.jpg}
 \captionof{figure}{\color{Green} Chart showing the steps involved in pre-processing and summary of supervised learning methods used.}
@@ -130,7 +128,7 @@ Previous studies have shown that video obtained from an ordinary webcam can be u
 
 
 %----------------------------------------------------------------------------------------
-%	EVm Flow Chart 
+%	EVM Flow Chart 
 %----------------------------------------------------------------------------------------  
  \section*{Eulerian Video Magnification: where we fit}
   \includegraphics[width=26cm]{images/EVM_where_we_fit.png}
@@ -197,7 +195,7 @@ Vivamus sed nibh ac metus tristique tristique a vitae ante. Sed lobortis mi ut a
 
 \color{SaddleBrown} % SaddleBrown color for the conclusions to make them stand out
 
-\section*{Conclusions}
+\section*{Conclusions and Further Work}
 
 \begin{itemize}
 \item Pellentesque eget orci eros. Fusce ultricies, tellus et pellentesque fringilla, ante massa luctus libero, quis tristique purus urna nec nibh. Phasellus fermentum rutrum elementum. Nam quis justo lectus.
@@ -208,21 +206,14 @@ Vivamus sed nibh ac metus tristique tristique a vitae ante. Sed lobortis mi ut a
 
 \color{DarkSlateGray} % Set the color back to DarkSlateGray for the rest of the content
 
-%----------------------------------------------------------------------------------------
-%	FORTHCOMING RESEARCH
-%----------------------------------------------------------------------------------------
-
-\section*{Forthcoming Research}
-
-Vivamus molestie, risus tempor vehicula mattis, libero arcu volutpat purus, sed blandit sem nibh eget turpis. Maecenas rutrum dui blandit lorem vulputate gravida. Praesent venenatis mi vel lorem tempor at varius diam sagittis. Nam eu leo id turpis interdum luctus a sed augue. Nam tellus.
 
  %----------------------------------------------------------------------------------------
 %	REFERENCES
 %----------------------------------------------------------------------------------------
 
 \nocite{*} % Print all references regardless of whether they were cited in the poster or not
-\bibliographystyle{plain} % Plain referencing style
-\bibliography{sample} % Use the example bibliography file sample.bib
+\bibliographystyle{unsrt} % Plain referencing style
+\bibliography{references} % Use the example bibliography file sample.bib
 
 %----------------------------------------------------------------------------------------
 %	ACKNOWLEDGEMENTS
@@ -230,7 +221,7 @@ Vivamus molestie, risus tempor vehicula mattis, libero arcu volutpat purus, sed 
 
 \section*{Acknowledgements}
 
-Etiam fermentum, arcu ut gravida fringilla, dolor arcu laoreet justo, ut imperdiet urna arcu a arcu. Donec nec ante a dui tempus consectetur. Cras nisi turpis, dapibus sit amet mattis sed, laoreet.
+We would like to thank Stephan Junek for his MatVis tool which allowed us to view the individual color channel intensity of videos; invaluable for the debugging process.
 
 %----------------------------------------------------------------------------------------
 

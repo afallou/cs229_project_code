@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  7 DEC 2013 19:24
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  9 DEC 2013 21:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -974,13 +974,13 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
  [1
 
 {c:/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<images/red_peak.png, id=43, 562.1pt x 380.42125pt>
+<images/red_peak.png, id=55, 562.1pt x 380.42125pt>
 File: images/red_peak.png Graphic file (type png)
  <use images/red_peak.png>
 Package pdftex.def Info: images/red_peak.png used on input line 126.
 (pdftex.def)             Requested size: 216.81pt x 146.73254pt.
 
-<images/red_trough.png, id=44, 562.1pt x 380.42125pt>
+<images/red_trough.png, id=56, 562.1pt x 380.42125pt>
 File: images/red_trough.png Graphic file (type png)
 
 <use images/red_trough.png>
@@ -1001,6 +1001,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [2 <./images/red_peak.png (PNG copy)> <./images/red_trough.png (PNG copy)>]
+(./final_project.bbl
+
+LaTeX Warning: Empty `thebibliography' environment on input line 3.
+
+)
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 191.
 
 
@@ -1014,36 +1019,41 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 191.
  (./final_project.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 191.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 191.
-Package rerunfilecheck Info: File `final_project.out' has not changed.
-(rerunfilecheck)             Checksum: 8D55B74FB8805D241B02269A398D8275;267.
+
+
+Package rerunfilecheck Warning: File `final_project.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `final_project.out':
+(rerunfilecheck)             Before: 150489336A172221B878F9586403BEB8;397
+(rerunfilecheck)             After:  94CF05960FEE90BC08B44ADD8E46C2A0;352.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 191.
  ) 
 Here is how much of TeX's memory you used:
- 23063 strings out of 493308
- 419949 string characters out of 6141366
+ 23073 strings out of 493308
+ 420059 string characters out of 6141366
  575989 words of memory out of 5000000
- 26098 multiletter control sequences out of 15000+600000
+ 26101 multiletter control sequences out of 15000+600000
  16261 words of font info for 62 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  56i,11n,92p,608b,553s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/tex
-live/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2013
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2013/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2013/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2013/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmr10.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr12.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.
-pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/tex
-live/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2013/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2013/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2013/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmti10.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/s
-ymbols/msbm10.pfb>
-Output written on final_project.pdf (3 pages, 166796 bytes).
+pdfTeX warning (dest): name{section.6} has been referenced but does not exist
+, replaced by a fixed one
+
+<c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texli
+ve/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2013/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2013/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2013/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr17.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr7.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><
+c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texliv
+e/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on final_project.pdf (3 pages, 131324 bytes).
 PDF statistics:
- 113 PDF objects out of 1000 (max. 8388607)
- 90 compressed objects within 1 object stream
- 12 named destinations out of 1000 (max. 500000)
- 63 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 107 PDF objects out of 1000 (max. 8388607)
+ 89 compressed objects within 1 object stream
+ 16 named destinations out of 1000 (max. 500000)
+ 87 words of extra memory for PDF output out of 10000 (max. 10000000)
 
