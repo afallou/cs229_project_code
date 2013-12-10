@@ -152,34 +152,26 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
 
 \section{Preprocessing}
 \subsection{Video data}
-  This new understanding of our problems naturally means that our core set of predictors are the three color channel intensity values through
-  time \(I_R(t), I_G(t), I_B(t)\), which are infinite-dimensional feature vectors, and we want to do a regression of the reading of our pulse oximeter $Ox(t)$ 
-  on these intensity values.
-  We then made two additional prior assumptions:
-  \begin{itemize}
-    \item We are only interested in periodic phenomena.
-    \item These phenomena have a frequency lying in the 0-5Hz range.
-  \end{itemize}
-
-  The first assumption means we can take Fourier series decomposition of our intensity/oximetry values, the second that we can
-  limit the decomposition to only a small number $p$ of harmonics. We took $p$ = 10 as a starting value:
-  \[
-    I(t)/Ox(t) = \sum_{n=-p}^{p} c_n e^{i \left(\frac{2\pi nt}{T}  + \phi_n \right) }
-  \]
-
-  Thus, our training output $y$ is a vector of size $2p$, with the coefficients of the Fourier decomposition.
-  Our feature vector contains the $2p$ coefficients of the Fourier decomposition for each of the three color channels.
-  Each pixel is considered a different training example, we have $k$ of them for one video (typically \(k=1280\times 720\)).
-  Thus our parameters matrix, $\theta \in \mathbb{R}^{(6p) \times k}$
+  We needed to find a way to convert a video into features.
+  Our feature set initially started out vaguely; we wanted to incorporate the frequency data inherent within each pixel in the video and output frequency data about a pulse oximeter waveform.
+  The three color channel intensity values through time, \(I_R(t), I_G(t), I_B(t)\) were our starting points.
+  We converted the video into a four dimensional matrix of pixel location x and y, color channel and time and performed the descontruction mentioned in the previous section.
   
 \subsection{Pulse Oximeter Data}
-  Pulse oximeter data was collected using an Arduino and a Pulse Oximeter connected to a laptop. A program was written that started recording the pulse ox data and simultaneously started taking pictures every 50-80 ms on a webcam. This gave the pulse ox data corresponding to the image/video data.
+  Pulse oximeter data was collected using an Arduino and a Pulse Oximeter connected to a laptop. 
+  A program was written that started recording the pulse ox data and simultaneously started taking pictures every 50-80 ms on a webcam.
+  This gave the pulse ox data corresponding to the image/video data.
+  Thus we had many images taken over small time intervals with a corresponding pulse oximeter values.
   \\
-  In order to accurately train our model, we needed to extract from the pulse oximeter data the largest amplitude frequencies and then train these on the video. 
-  This required interpolating the pulse ox values over regular time intervals, using a high pass filter and taking into account phase.
+  Further processing had to be done because the pictures were not taken uniformly in time and so computing a fourier decomposition of the pixels taken from each image would not be correct.
+  An interpolation was needed for images (to create a set of images with uniform time between them) and also for the pulse oximeter data to corroborate with the images.
+  \\
+  In order to accurately train our model, we also needed to bin the pulse oximeter values and be able to recreate the signal from the binned values so that they remained true to life.
+  
+  
 
 
-\section{Initial results}
+\section{Results}
   Our initial computations on the pixel-intensity data revealed, unsurprisingly,
   that pixel intensity variation over time for a reasonably still video was not large.
   Often a single color channel for a pixel would have a range of 3 (when it could vary from 0-255) over the whole video, even if that pixel was contained in the face.
@@ -187,6 +179,14 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
   A simple solution is to subtract a mean intensity value of our pixel, so as to increase the relative intensity variations over time.
   Ultimately, we may have to resort to using EVM-enhanced videos if our training data has signals that are too weak to pick up.
   
+  
+ \section{Conclusions}
+ 
+ \section{Further Work}
+ 
+  \bibliographystyle{unsrt} % Plain referencing style
+\bibliography{references_final_proj} % Use the example bibliography file sample.bib
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \end{document}
   

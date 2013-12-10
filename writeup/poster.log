@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  8 DEC 2013 19:53
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  9 DEC 2013 21:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -378,100 +378,85 @@ Underfull \hbox (badness 10000) in paragraph at lines 53--57
 
  []
 
-<images/red_trough.png, id=1, 562.1pt x 380.42125pt>
-File: images/red_trough.png Graphic file (type png)
+<images/stanfordlogo.png, id=1, 501.875pt x 501.875pt>
+File: images/stanfordlogo.png Graphic file (type png)
 
-<use images/red_trough.png>
-Package pdftex.def Info: images/red_trough.png used on input line 60.
-(pdftex.def)             Requested size: 569.05511pt x 385.15117pt.
+<use images/stanfordlogo.png>
+Package pdftex.def Info: images/stanfordlogo.png used on input line 60.
+(pdftex.def)             Requested size: 426.79134pt x 426.81018pt.
+
+Overfull \hbox (19.72723pt too wide) in paragraph at lines 52--62
+[][] [] 
+ []
+
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20.74> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 75.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <35.83> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 91.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <29.86> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 122.
-
-<images/flow_chart_1.jpg, id=2, 722.7pt x 542.025pt>
+<images/flow_chart_1.jpg, id=3, 722.7pt x 542.025pt>
 File: images/flow_chart_1.jpg Graphic file (type jpg)
 
 <use images/flow_chart_1.jpg>
 Package pdftex.def Info: images/flow_chart_1.jpg used on input line 124.
 (pdftex.def)             Requested size: 722.69823pt x 542.02367pt.
 
-<images/flow_chart_2.jpg, id=3, 722.7pt x 542.025pt>
+<images/flow_chart_2.jpg, id=4, 542.025pt x 135.50626pt>
 File: images/flow_chart_2.jpg Graphic file (type jpg)
 
 <use images/flow_chart_2.jpg>
 Package pdftex.def Info: images/flow_chart_2.jpg used on input line 125.
-(pdftex.def)             Requested size: 722.69823pt x 542.02367pt.
+(pdftex.def)             Requested size: 542.02367pt x 135.5059pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 124--126
 []
  []
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 129.
+<images/EVM_where_we_fit.png, id=5, 334.24875pt x 583.42969pt>
+File: images/EVM_where_we_fit.png Graphic file (type png)
+
+<use images/EVM_where_we_fit.png>
+Package pdftex.def Info: images/EVM_where_we_fit.png used on input line 134.
+(pdftex.def)             Requested size: 739.77165pt x 1291.49911pt.
+LaTeX Font Info:    Try loading font information for U+msa on input line 147.
+
 (c:/texlive/2013/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 129.
+LaTeX Font Info:    Try loading font information for U+msb on input line 147.
 
 (c:/texlive/2013/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Underfull \hbox (badness 10000) in paragraph at lines 139--147
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 139--147
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 139--147
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 139--147
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 139--147
-
- []
-
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 183.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 149.
 
-Overfull \hbox (51.61647pt too wide) in paragraph at lines 181--190
+Overfull \hbox (51.61647pt too wide) in paragraph at lines 147--156
 [][] 
  []
 
+<images/red_trough.png, id=6, 562.1pt x 380.42125pt>
 File: images/red_trough.png Graphic file (type png)
+
 <use images/red_trough.png>
-Package pdftex.def Info: images/red_trough.png used on input line 198.
+Package pdftex.def Info: images/red_trough.png used on input line 164.
 (pdftex.def)             Requested size: 593.39137pt x 401.61925pt.
 File: images/red_trough.png Graphic file (type png)
  <use images/red_trough.png>
-Package pdftex.def Info: images/red_trough.png used on input line 222.
+Package pdftex.def Info: images/red_trough.png used on input line 188.
 (pdftex.def)             Requested size: 593.39137pt x 401.61925pt.
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 235.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 201.
 
 
 (c:/texlive/2013/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <24.88> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 235.
-
-No file poster.bbl.
-
-Overfull \vbox (208.16432pt too high) has occurred while \output is active []
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 201.
+ (./poster.bbl)
+Overfull \vbox (424.42621pt too high) has occurred while \output is active []
 
 
-Overfull \vbox (221.213pt too high) has occurred while \output is active []
+Overfull \vbox (389.22299pt too high) has occurred while \output is active []
 
 
 [1
@@ -479,28 +464,26 @@ Overfull \vbox (221.213pt too high) has occurred while \output is active []
 
 Non-PDF special ignored!
 Non-PDF special ignored!{c:/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdft
-ex.map} <./images/red_trough.png (PNG copy)> <./images/flow_chart_1.jpg> <./ima
-ges/flow_chart_2.jpg>] (./poster.aux) ) 
+ex.map} <./images/stanfordlogo.png> <./images/flow_chart_1.jpg> <./images/flow_
+chart_2.jpg> <./images/EVM_where_we_fit.png> <./images/red_trough.png (PNG copy
+)>] (./poster.aux) ) 
 Here is how much of TeX's memory you used:
- 4889 strings out of 493308
- 71775 string characters out of 6141366
- 189386 words of memory out of 5000000
- 8252 multiletter control sequences out of 15000+600000
- 31119 words of font info for 72 fonts, out of 8000000 for 9000
+ 4884 strings out of 493308
+ 71792 string characters out of 6141366
+ 178366 words of memory out of 5000000
+ 8245 multiletter control sequences out of 15000+600000
+ 24973 words of font info for 54 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,8n,38p,798b,1503s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/texlive/2013/texmf-dist/fonts/enc/dv
-ips/base/8r.enc}<c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
-12.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c
-:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/
-2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2013/texmf
--dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2013/texmf-dist/fon
-ts/type1/urw/times/utmb8a.pfb><c:/texlive/2013/texmf-dist/fonts/type1/urw/times
-/utmr8a.pfb><c:/texlive/2013/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on poster.pdf (1 page, 160969 bytes).
+ 38i,8n,38p,601b,1239s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/texlive/2013/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:
+/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/
+2013/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2013/texmf-dist/fo
+nts/type1/urw/times/utmr8a.pfb><c:/texlive/2013/texmf-dist/fonts/type1/urw/time
+s/utmri8a.pfb>
+Output written on poster.pdf (1 page, 257672 bytes).
 PDF statistics:
- 44 PDF objects out of 1000 (max. 8388607)
- 29 compressed objects within 1 object stream
+ 32 PDF objects out of 1000 (max. 8388607)
+ 18 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

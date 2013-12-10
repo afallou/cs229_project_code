@@ -49,15 +49,15 @@
 % The third is 19% wide and houses a logo for your university/organization or a photo of you
 % The widths of these boxes can be easily edited to accommodate your content as you see fit
 
-\begin{minipage}[b]{0.80\linewidth}
+\begin{minipage}[b]{0.85\linewidth}
 \veryHuge \color{NavyBlue} \textbf{Medical diagnostics over video} \color{Black}\\ % Title
 \Huge\textit{Extracting the pulse and oxygen levels in blood from video of a subject}\\[1cm] % Subtitle
 \huge \textbf{D Deriso, A Fallou \& N Banerjee}\\ % Author(s)
 %\huge University and Department Name\\ % University/organization
 \end{minipage}
 %
-\begin{minipage}[b]{0.19\linewidth}
-\includegraphics[width=20cm]{images/red_trough.png} % Logo or a photo of you, adjust its dimensions here
+\begin{minipage}[b]{0.15\linewidth}
+\includegraphics[width=15cm]{images/stanfordlogo.png} % Logo or a photo of you, adjust its dimensions here
 \end{minipage}
 
 \vspace{1cm} % A bit of extra whitespace between the header and poster content
@@ -111,63 +111,29 @@ Previous studies have shown that video obtained from an ordinary webcam can be u
 \item Create an error vs technique graph to compare techniques.
 \item Conclude with the best technique.
 \end{enumerate}
+
+\vspace{10cm} % Inserted here to put chart on next column
+
 %----------------------------------------------------------------------------------------
 %	Feature selection and Pre-processing
 %----------------------------------------------------------------------------------------
-
 \section*{Feature selection and pre-processing}
 
 %------------------------------------------------
-
-\subsection*{Data processing}
 
 \includegraphics{images/flow_chart_1.jpg}
 \includegraphics{images/flow_chart_2.jpg}
 \captionof{figure}{\color{Green} Chart showing the steps involved in pre-processing and summary of supervised learning methods used.}
 
 
-\section*{$\epsilon$-Support Vector Regression}
 
-  As well as basic stochastic gradient descent, we used $\epsilon$-Support Vector Regression.
-
-  The basic idea behind $\epsilon$-Support Vector Regression is to find a function $f(x)$ that has at most $\epsilon$ deviation from the training data $y_i$ and is also as flat as possible. We pursued a soft margin approach, which allowed us to have training examples outside of the $\epsilon$ tube at a cost.
-
-  An interesting conceptual difference between this and the Support Vector Machines is that the support vectors in our case are those that lie outside the $\epsilon$-tube. In the SVM the support vectors are those that ultimately lie closest to the classifying line. Naturally the dual optimization problem is different to the SVM optimization.
-
-  A radial basis function of the form: $exp(-\frac{||\mathbf{x} - \mathbf{x'}||_{2}^{2}}{2 \sigma ^2})$ was used as the Kernel, as is common in Machine Learning applications.
-
-  In summary, we evaluate the the Kernel function with the test data and add the dot products with relevant weights. Finally we add the constant intercept term for the final prediction.
-\\
-\\
-\\
-\\
-\\
-\\
-Nulla vel nisl sed mauris auctor mollis non sed. 
-
-\begin{equation}
-E = mc^{2}
-\label{eqn:Einstein}
-\end{equation}
-
-Curabitur mi sem, pulvinar quis aliquam rutrum. (1) edf (2)
-, $\Omega=[-1,1]^3$, maecenas leo est, ornare at. $z=-1$ edf $z=1$ sed interdum felis dapibus sem. $x$ set $y$ ytruem. 
-Turpis $j$ amet accumsan enim $y$-lacina; 
-ref $k$-viverra nec porttitor $x$-lacina. 
-
-Vestibulum ac diam a odio tempus congue. Vivamus id enim nisi:
-
-\begin{eqnarray}
-\cos\bar{\phi}_k Q_{j,k+1,t} + Q_{j,k+1,x}+\frac{\sin^2\bar{\phi}_k}{T\cos\bar{\phi}_k} Q_{j,k+1} &=&\nonumber\\ 
--\cos\phi_k Q_{j,k,t} + Q_{j,k,x}-\frac{\sin^2\phi_k}{T\cos\phi_k} Q_{j,k}\label{edgek}
-\end{eqnarray}
-and
-\begin{eqnarray}
-\cos\bar{\phi}_j Q_{j+1,k,t} + Q_{j+1,k,y}+\frac{\sin^2\bar{\phi}_j}{T\cos\bar{\phi}_j} Q_{j+1,k}&=&\nonumber \\
--\cos\phi_j Q_{j,k,t} + Q_{j,k,y}-\frac{\sin^2\phi_j}{T\cos\phi_j} Q_{j,k}.\label{edgej}
-\end{eqnarray} 
-
-Nulla sed arcu arcu. Duis et ante gravida orci venenatis tincidunt. Fusce vitae lacinia metus. Pellentesque habitant morbi. $\mathbf{A}\underline{\xi}=\underline{\beta}$ Vim $\underline{\xi}$ enum nidi $3(P+2)^{2}$ lacina. Id feugain $\mathbf{A}$ nun quis; magno. Fusce convallis rutrum turpis, quis aliquet enim accumsan id. Vestibulum ullamcorper porttitor convallis. Integer sagittis interdum malesuada. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed adipiscing tristique orci at ullamcorper. Morbi accumsan, urna et porttitor pulvinar, lacus risus dignissim massa. Proin sollicitudin. Pellentesque eget orci eros. Fusce ultricies, tellus et pellentesque fringilla, ante massa luctus libero, quis tristique purus urna nec nibh.
+%----------------------------------------------------------------------------------------
+%	EVM Flow Chart 
+%----------------------------------------------------------------------------------------  
+ \section*{Eulerian Video Magnification: where we fit}
+  \includegraphics[width=26cm]{images/EVM_where_we_fit.png}
+  \caption{Flow chart showing how our pulse frequency can be used to augment Eulerian Video Magnification}
+  
 
 %----------------------------------------------------------------------------------------
 %	RESULTS 
@@ -229,7 +195,7 @@ Vivamus sed nibh ac metus tristique tristique a vitae ante. Sed lobortis mi ut a
 
 \color{SaddleBrown} % SaddleBrown color for the conclusions to make them stand out
 
-\section*{Conclusions}
+\section*{Conclusions and Further Work}
 
 \begin{itemize}
 \item Pellentesque eget orci eros. Fusce ultricies, tellus et pellentesque fringilla, ante massa luctus libero, quis tristique purus urna nec nibh. Phasellus fermentum rutrum elementum. Nam quis justo lectus.
@@ -240,21 +206,14 @@ Vivamus sed nibh ac metus tristique tristique a vitae ante. Sed lobortis mi ut a
 
 \color{DarkSlateGray} % Set the color back to DarkSlateGray for the rest of the content
 
-%----------------------------------------------------------------------------------------
-%	FORTHCOMING RESEARCH
-%----------------------------------------------------------------------------------------
-
-\section*{Forthcoming Research}
-
-Vivamus molestie, risus tempor vehicula mattis, libero arcu volutpat purus, sed blandit sem nibh eget turpis. Maecenas rutrum dui blandit lorem vulputate gravida. Praesent venenatis mi vel lorem tempor at varius diam sagittis. Nam eu leo id turpis interdum luctus a sed augue. Nam tellus.
 
  %----------------------------------------------------------------------------------------
 %	REFERENCES
 %----------------------------------------------------------------------------------------
 
 \nocite{*} % Print all references regardless of whether they were cited in the poster or not
-\bibliographystyle{plain} % Plain referencing style
-\bibliography{sample} % Use the example bibliography file sample.bib
+\bibliographystyle{unsrt} % Plain referencing style
+\bibliography{references} % Use the example bibliography file sample.bib
 
 %----------------------------------------------------------------------------------------
 %	ACKNOWLEDGEMENTS
@@ -262,7 +221,7 @@ Vivamus molestie, risus tempor vehicula mattis, libero arcu volutpat purus, sed 
 
 \section*{Acknowledgements}
 
-Etiam fermentum, arcu ut gravida fringilla, dolor arcu laoreet justo, ut imperdiet urna arcu a arcu. Donec nec ante a dui tempus consectetur. Cras nisi turpis, dapibus sit amet mattis sed, laoreet.
+We would like to thank Stephan Junek for his MatVis tool which allowed us to view the individual color channel intensity of videos; invaluable for the debugging process.
 
 %----------------------------------------------------------------------------------------
 
