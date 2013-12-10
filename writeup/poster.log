@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  9 DEC 2013 20:30
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  9 DEC 2013 20:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -389,103 +389,98 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <20.74> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <35.83> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 91.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <29.86> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 122.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 124.
 
 <images/flow_chart_1.jpg, id=2, 722.7pt x 542.025pt>
 File: images/flow_chart_1.jpg Graphic file (type jpg)
 
 <use images/flow_chart_1.jpg>
-Package pdftex.def Info: images/flow_chart_1.jpg used on input line 124.
+Package pdftex.def Info: images/flow_chart_1.jpg used on input line 126.
 (pdftex.def)             Requested size: 722.69823pt x 542.02367pt.
 
-<images/flow_chart_2.jpg, id=3, 542.025pt x 325.215pt>
+<images/flow_chart_2.jpg, id=3, 542.025pt x 135.50626pt>
 File: images/flow_chart_2.jpg Graphic file (type jpg)
 
 <use images/flow_chart_2.jpg>
-Package pdftex.def Info: images/flow_chart_2.jpg used on input line 125.
-(pdftex.def)             Requested size: 542.02367pt x 325.2142pt.
+Package pdftex.def Info: images/flow_chart_2.jpg used on input line 127.
+(pdftex.def)             Requested size: 542.02367pt x 135.5059pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 124--126
+Underfull \hbox (badness 10000) in paragraph at lines 126--128
 []
- []
-
-LaTeX Font Info:    Try loading font information for U+msa on input line 128.
-(c:/texlive/2013/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Try loading font information for U+msb on input line 128.
-
-(c:/texlive/2013/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Underfull \hbox (badness 10000) in paragraph at lines 138--144
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 138--144
-
  []
 
 <images/EVM_where_we_fit.png, id=4, 334.24875pt x 583.42969pt>
 File: images/EVM_where_we_fit.png Graphic file (type png)
 
 <use images/EVM_where_we_fit.png>
-Package pdftex.def Info: images/EVM_where_we_fit.png used on input line 145.
+Package pdftex.def Info: images/EVM_where_we_fit.png used on input line 136.
 (pdftex.def)             Requested size: 739.77165pt x 1291.49911pt.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 160.
+LaTeX Font Info:    Try loading font information for U+msa on input line 149.
 
-Overfull \hbox (51.61647pt too wide) in paragraph at lines 158--167
+(c:/texlive/2013/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 149.
+
+(c:/texlive/2013/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <24.88> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 151.
+
+Overfull \hbox (51.61647pt too wide) in paragraph at lines 149--158
 [][] 
  []
 
 File: images/red_trough.png Graphic file (type png)
 <use images/red_trough.png>
-Package pdftex.def Info: images/red_trough.png used on input line 175.
+Package pdftex.def Info: images/red_trough.png used on input line 166.
 (pdftex.def)             Requested size: 593.39137pt x 401.61925pt.
 File: images/red_trough.png Graphic file (type png)
  <use images/red_trough.png>
-Package pdftex.def Info: images/red_trough.png used on input line 199.
+Package pdftex.def Info: images/red_trough.png used on input line 190.
 (pdftex.def)             Requested size: 593.39137pt x 401.61925pt.
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 212.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 203.
 
 
 (c:/texlive/2013/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <24.88> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 212.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 203.
 
 No file poster.bbl.
+
+Overfull \vbox (435.34633pt too high) has occurred while \output is active []
+
+
+Overfull \vbox (420.0639pt too high) has occurred while \output is active []
+
+
 [1
 
 
 Non-PDF special ignored!
 Non-PDF special ignored!{c:/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdft
 ex.map} <./images/red_trough.png (PNG copy)> <./images/flow_chart_1.jpg> <./ima
-ges/flow_chart_2.jpg> <./images/EVM_where_we_fit.png>] [2] (./poster.aux) ) 
+ges/flow_chart_2.jpg> <./images/EVM_where_we_fit.png>] (./poster.aux) ) 
 Here is how much of TeX's memory you used:
- 4891 strings out of 493308
- 71894 string characters out of 6141366
- 161362 words of memory out of 5000000
- 8253 multiletter control sequences out of 15000+600000
- 31119 words of font info for 72 fonts, out of 8000000 for 9000
+ 4875 strings out of 493308
+ 71633 string characters out of 6141366
+ 178362 words of memory out of 5000000
+ 8238 multiletter control sequences out of 15000+600000
+ 27106 words of font info for 57 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,8n,38p,601b,401s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/
-texlive/2013/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2013/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2013/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2013/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmr12.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr17.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
-.pfb><c:/texlive/2013/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2
-013/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2013/texmf-dist/fon
-ts/type1/urw/times/utmri8a.pfb>
-Output written on poster.pdf (2 pages, 195109 bytes).
+ 38i,8n,38p,601b,1341s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/texl
+ive/2013/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2013/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2013/texmf-dist/fonts/type1/
+urw/times/utmb8a.pfb><c:/texlive/2013/texmf-dist/fonts/type1/urw/times/utmr8a.p
+fb><c:/texlive/2013/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on poster.pdf (1 page, 145761 bytes).
 PDF statistics:
- 48 PDF objects out of 1000 (max. 8388607)
- 31 compressed objects within 1 object stream
+ 29 PDF objects out of 1000 (max. 8388607)
+ 17 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

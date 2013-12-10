@@ -111,10 +111,12 @@ Previous studies have shown that video obtained from an ordinary webcam can be u
 \item Create an error vs technique graph to compare techniques.
 \item Conclude with the best technique.
 \end{enumerate}
+
+\vspace{10cm} % Inserted here to put chart on next column
+
 %----------------------------------------------------------------------------------------
 %	Feature selection and Pre-processing
 %----------------------------------------------------------------------------------------
-
 \section*{Feature selection and pre-processing}
 
 %------------------------------------------------
@@ -125,19 +127,8 @@ Previous studies have shown that video obtained from an ordinary webcam can be u
 \includegraphics{images/flow_chart_2.jpg}
 \captionof{figure}{\color{Green} Chart showing the steps involved in pre-processing and summary of supervised learning methods used.}
 
-\section*{$\epsilon$-Support Vector Regression}
 
-  As well as basic stochastic gradient descent, we used $\epsilon$-Support Vector Regression.
 
-  The basic idea behind $\epsilon$-Support Vector Regression is to find a function $f(x)$ that has at most $\epsilon$ deviation from the training data $y_i$ and is also as flat as possible. We pursued a soft margin approach, which allowed us to have training examples outside of the $\epsilon$ tube at a cost.
-
-  An interesting conceptual difference between this and the Support Vector Machines is that the support vectors in our case are those that lie outside the $\epsilon$-tube. In the SVM the support vectors are those that ultimately lie closest to the classifying line. Naturally the dual optimization problem is different to the SVM optimization.
-
-  A radial basis function of the form: $exp(-\frac{||\mathbf{x} - \mathbf{x'}||_{2}^{2}}{2 \sigma ^2})$ was used as the Kernel, as is common in Machine Learning applications.
-
-  In summary, we evaluate the the Kernel function with the test data and add the dot products with relevant weights. Finally we add the constant intercept term for the final prediction.
-\\
-\\
 %----------------------------------------------------------------------------------------
 %	EVm Flow Chart 
 %----------------------------------------------------------------------------------------  
