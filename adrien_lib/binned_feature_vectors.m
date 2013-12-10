@@ -1,13 +1,12 @@
-function [binarized_vector] = binned_feature_vectors(frequency_domain_input, threshold_value)
-	BINS_COUNT = 25;
+function [binarized_vector] = binned_feature_vectors(frequency_domain_input, threshold_value, bins_count)
 	vector_length = length(frequency_domain_input);
 	positive_frequencies_input = frequency_domain_input(1:ceil(vector_length / 2));
-	binned_vector = zeros(BINS_COUNT, 1);
+	binned_vector = zeros(bins_count, 1);
 
 	% Number of points in each bin
-	bins_size = floor(ceil(vector_length / 2) / BINS_COUNT);
+	bins_size = floor(ceil(vector_length / 2) / bins_count);
 
-	for i = 0:BINS_COUNT - 1;
+	for i = 0:bins_count - 1;
 		binned_vector(i + 1) = sum(positive_frequencies_input(i * bins_size + 1:(i+1) * bins_size)) / bins_size;
 	end
 

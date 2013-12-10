@@ -51,4 +51,12 @@ function [video_matrix, resampling_rate, pulse_ox_resampled] = process_images(di
     end
     % Interpolate for the pulse oximeter values
     pulse_ox_resampled = interp1(file_date, pulse_ox_value, resampling_vector);
+
+    writer_obj = VideoWriter('video_bmp');
+    open(writer_obj);
+    for i = 1:image_count
+    	writeVideo(writer_obj, uint8(squeeze(video_matrix(:, :, i, :))));
+    end	
+    close(writer_obj);
 end
+

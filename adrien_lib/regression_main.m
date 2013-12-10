@@ -7,8 +7,9 @@
 % video_matrix = video_matrix(100:260, 140:260, :, :);
 
 COLOR_CHANNELS_COUNT = 3;
-THRESHOLD_VIDEO = 500;
-THRESHOLD_PULSEOX = 200;
+THRESHOLD_VIDEO = 200;
+THRESHOLD_PULSEOX = 170;
+BINS_COUNT = 45;
 
 video_fft = fft(video_matrix, [], 3);
 video_width = size(video_fft, 2);
@@ -17,12 +18,12 @@ video_length = size(video_fft, 3);
 total_pixel_count = video_height * video_width;
 video_fft = reshape(video_fft, total_pixel_count, video_length, COLOR_CHANNELS_COUNT);
 
-first_binned_vector = binned_feature_vectors(video_fft(1, :, 1), THRESHOLD_VIDEO);
+first_binned_vector = binned_feature_vectors(video_fft(1, :, 1), THRESHOLD_VIDEO, BINS_COUNT);
 binarized_video = zeros(total_pixel_count, size(first_binned_vector), COLOR_CHANNELS_COUNT);
 
 for color_channel_index = 1:3
 	parfor i = 1:total_pixel_count
-		binarized_video(i, :, color_channel_index) = binned_feature_vectors(abs(video_fft(i, :, color_channel_index)), THRESHOLD_VIDEO);
+		binarized_video(i, :, color_channel_index) = binned_feature_vectors(abs(video_fft(i, :, color_channel_index)), THRESHOLD_VIDEO, BINS_COUNT);
 	end
 end
 
@@ -31,4 +32,4 @@ parfor i = 1:total_pixel_count
 	feature_vectors(i, :) = [binarized_video(i, :, 1), binarized_video(i, :, 2), binarized_video(i, :, 3)];
 end
 
-binned_pulseox = binned_feature_vectors(abs(fft(pulseox_resampled)), THRESHOLD_PULSEOX);
+binned_pulseox = binned_feature_vectors(abs(fft(pulseox_resampled)), THRESHOLD_PULSEOX, BINS_COUNT);

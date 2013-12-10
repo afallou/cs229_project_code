@@ -68,8 +68,7 @@ amplify_spatial_lpyr_temporal_ideal(inFile, resultsDir, 100, 10, 100, 120, 600, 
 %% face
 inFile = fullfile(dataDir,'face.mp4');
 fprintf('Processing %s\n', inFile);
-amplify_spatial_Gdown_temporal_ideal(inFile,resultsDir,50,4, ...
-                     50/60,60/60,30, 1);
+amplify_spatial_Gdown_temporal_ideal(inFile,resultsDir,50,4, 50/60,60/60,30, 1);
 
 
 %% face2
