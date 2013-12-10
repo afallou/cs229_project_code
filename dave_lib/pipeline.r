@@ -334,6 +334,44 @@ extract_features = function(i,k){
 	return(feature_row)
 }
 
+# create model formula
+
+create_formula = function(f_pix, f_phase, f_fq){
+   # flags
+   # f_pix = T
+   # f_phase = T
+   # f_fq = T
+
+   # formula
+   pixel_names = c("px.i", "px.k")
+   fq_names = paste("fq.", 1:21, sep="")
+   ph_names = paste("ph.", 1:21, sep="")
+
+   # labels
+   label_names = paste("l.", c(fq_names, ph_names), sep="")
+   label_formula = paste(label_names, collapse=', ')
+
+   # features
+   feature_names = c()
+   if(f_fq)    feature_names = c(feature_names, fq_names)
+   if(f_phase) feature_names = c(feature_names, ph_names)
+   if(f_pix)   feature_names = c(feature_names, pixel_names)
+   feature_names = paste("f.", feature_names, sep="")
+   feature_formula = paste(feature_names, collapse='+')
+
+   # multivariate regression
+   # the intercept term captures basically the entire prediction, so we remove it in the formula with (-1)
+   model_formula = as.formula(paste("cbind( ", label_formula, " )", "~", feature_formula, "-1")) 
+
+   attr(model_formula, "features") = feature_names
+   attr(model_formula, "labels") = label_names
+
+   return(model_formula)
+
+   # univariate regression
+   # model_formula = as.formula(paste("labels.1", "~", features)) 
+}
+
 # ---------------------------------------------------------------------------------------
 # import, preprocess, plot
 
@@ -484,64 +522,80 @@ training_data = cbind(f=training_features, l=training_labels)
 
 training_data = read.csv('training_data.csv.gz', header = T, stringsAsFactors = F)
 
-# ---------------------------------------------------------------------------------------
-# create model formula
-
-# flags
-f_pix = F # use pixel location as a feature (without generalizes better)
-
-# formula
-pixel_names = c("px.i", "px.k")
-fq_names = paste("fq.", 1:21, sep="")
-ph_names = paste("ph.", 1:21, sep="")
-fq_ph = c(fq_names, ph_names)
-label_names = paste("l.", fq_ph, sep="")
-feature_names = paste("f.", fq_ph, sep="") # without pixels in the model
-if(f_pix) feature_names = c(paste("f.", pixel_names, sep=""), feature_names) # with pixels in the model
-label_formula = paste(label_names, collapse=',')
-feature_formula = paste(feature_names, collapse='+')
-
-# multivariate regression
-# the intercept term captures basically the entire prediction, so we remove it in the formula with (-1)
-model_formula = as.formula(paste("cbind(", label_formula, ")", "~", feature_formula, "-1")) 
-
-# univariate regression
-# model_formula = as.formula(paste("labels.1", "~", features)) 
+load_plot_libs()
+pulseox_data = import_pulseox_data()
+pulseox_resampled = resample(pulseox_data)
+pulseox_fft = simple_fft(pulseox_resampled)
+pulseox_fft_bin = bin_fft(pulseox_fft, 4, 1, 6)
+pulseox_features = ddply(pulseox_fft_bin, 'bin', compute_features)
 
 # ---------------------------------------------------------------------------------------
 # train linear model
 
-# train
-lm_model = lm(model_formula, data=training_data)
+train_shiznit = function(f_pix, f_phase, f_fq){
+   # create model formula
+   model_formula = create_formula(f_pix, f_phase, f_fq)
+   #print(model_formula)
+   
+   # extract data relevant to model
+   training_features = training_data[,attr(model_formula,"features")]
+   ground_truth = colMeans(training_data[,attr(model_formula,"labels")])
 
-# predict
-weight_matrix = as.matrix(lm_model$coeff)                # extract weight matrix
-weight_matrix[is.na(weight_matrix)] = 0                  # set NA to zero
-if(f_pix) pred = as.matrix(training_features) %*% weight_matrix # matrix multiply
-if(!f_pix) pred = as.matrix(training_features[,3:ncol(training_features)]) %*% weight_matrix # matrix multiply
-predict_lm = colMeans(pred)                              # take an average prediction and add the intercept term
-rmse_t_lm = rmse(predict_lm - training_labels)           # compute the root mean squared error
-# 0.0162 without pixels, 0.0125 with pixels
-# 0.00884 with pixels + phase
+   # train model
+   lm_model = lm(model_formula, data=training_data)
+   #print(lm_model)
 
-# ---------------------------------------------------------------------------------------
-# reconstruct pulse ox waveform based on linear model fit
+   # extract weight matrix
+   weight_matrix = as.matrix(lm_model$coeff)                # extract weight matrix
+   weight_matrix[is.na(weight_matrix)] = 0                  # set NA to zero
 
-fq_vector = pulseox_features$fq
-weight_vector = predict_lm[1:21]
-phase_vector = predict_lm[22:42]
-resampled_pulseox_data = resample(pulseox_data)
+   # predict data
+   predict_lm = as.matrix(training_features) %*% weight_matrix    # matrix multiply
+   predict_lm = colMeans(predict_lm)                              # take an average prediction
 
-reconstructed_data = generate_sample_data(
-	fq_vector,
-	weight_vector,
-	phase_vector,
-	attr(resampled_pulseox_data, 'sampling_fq'),
-	nrow(resampled_pulseox_data)-1,
-	median(resampled_pulseox_data$signal)
-)
+   # calculate error
+   rmse_t_lm = rmse(predict_lm - ground_truth)           # compute the root mean squared error
+   # 0.0162 without pixels, 0.0125 with pixels
+   # 0.00884 with pixels + phase
 
-# plot_resampled_fft_peaks(reconstructed_data, 1, .1, 'lowess')
+   # ---------------------------------------------------------------------------------------
+   # reconstruct pulse ox waveform based on linear model fit
+
+   fq_vector = pulseox_features$fq
+   weight_vector = predict_lm[1:21]
+   phase_vector = predict_lm[22:42]
+
+   reconstructed_data = generate_sample_data(
+   	fq_vector,
+   	weight_vector,
+   	phase_vector,
+   	attr(pulseox_resampled, 'sampling_fq'),
+   	nrow(pulseox_resampled)-1,
+   	median(pulseox_resampled$signal)
+   )
+
+   cross_correlation = ccf(pulseox_resampled$signal, reconstructed_data$signal)
+   cc_max = max(cross_correlation$acf)
+   cc_lag = cross_correlation$lag[which(cross_correlation$acf == cc_max)]
+
+   # output
+   out = data.frame(f_pix, f_phase, f_fq, format(rmse_t_lm, digits=3), format(cc_max, digits=3), cc_lag)
+   colnames(out) = c("pixels", "phase", "fq", "MSE", "cc_max", "cc_lag")
+   print(out)
+   
+   return(out)
+}
+
+results = c()
+for(i in 0:1){
+   for(k in 0:1){
+      for(j in 0:1){
+         if(i == k && k ==j && i ==F) next # can't all be off or it breaks
+         x = train_shiznit(as.logical(i),as.logical(k),as.logical(j))
+         results = rbind(results, x)
+      }
+   }
+}
 
 # plot
 plot(resampled_pulseox_data, xlab='time (sec)', ylab='Signal', type='l', col='lightgrey')
