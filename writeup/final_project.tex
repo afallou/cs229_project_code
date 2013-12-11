@@ -2,6 +2,9 @@
 %Had an issue with too many packages so needed to put this in to work around it.
 \usepackage{etex}
 
+\usepackage{algorithm2e}
+\usepackage{fullpage,enumitem,amsmath,amssymb,graphicx}
+
 \usepackage{amssymb,amsmath,amsthm,mathtools}
 \usepackage{hyperref,cleveref}
 \usepackage[margin=1.25in]{geometry}
@@ -46,7 +49,7 @@
 \renewcommand{\footrulewidth}{.3pt}
 \setlength\voffset{-0.25in}
 \setlength\textheight{648pt}
-
+\setlength{\headheight}{15pt}
 \setlength{\tabcolsep}{8pt}
 
 \setlength{\parindent}{1cm}
@@ -171,12 +174,36 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
   
 
 
-\section{Results}
+\section{Results and Discussion}
  \subsection*{Initial results}
-  The binning involved with our initial results provided too coarse a model. We could not see any features other than 
+  At first we took 10 bins over a 6Hz interval of the Fourier transform of each pixel. We outputted a binary vector, with a 1 if the binned value exceeded a threshold and a 0 otherwise. The binning involved with our initial results provided a coarse model and was in fact a very poor representation of the data. In particular, for each pixel the binary vector consisted of [1, 0, 0 ..., 0] which is exactly the same distribution we would expect for noise. Thus our weight matrix contained predominantly zeroes, as we were training to a predominantly zero vector. \\
+  To make our predictions closer to the ground truth, we increased the bin size, although limitations in our computational power meant that we were restricted to maximum 24 bins over the 6Hz interval. This applied to both the pulse oximeter value and the pixel's Fourier transforms. We also included the phase terms and the pixel locations as further features.
+  
  \subsection*{Using the normal equations}
- Our feature matrix, \(X\), which contained the features for every training example, gave a matrix $X^TX$ with a very high condition number. This meant the normal equations were unusuable.
- \subsection*{Limitations of our methods}
+ Our feature matrix, \(X\), which contained the features for every training example, gave a matrix $X^TX$ with a very high condition number. This meant the normal equations were unusuable and so stochastic gradient descent was used.
+ 
+ \subsection*{Results}
+ Features were extracted from each pixel over time, and included the pixel’s [i,k] location, the FFT of the pixel’s time course binned to 4 buckets per frequencies 0-6Hz [fq1, fq2, …, fq24], and phase [ph1, ph2, …, ph24]. Linear least squares regression models were trained on the following combination of features:\\
+
+\begin{table}[htb]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|} 
+ \hline
+      	\text{Pixel location} & \text{Phase} & 	\text{Frequency} & 	\text{MSE} &  \text{Max cross correlation}  \\ \hline
+    	  $\checkmark$ 	&  $\checkmark$ 	&   $\checkmark$ 	& 0.00884 	&  0.0936  \\ \hline
+    	   $\checkmark$ 	&  $\checkmark$ 	&   $\times$  	& 0.114 	&  0.0943  \\ \hline
+    	   $\checkmark$ 	&  $\times$ 	&   $\checkmark$ 	& 0.00903 	&  0.0936  \\ \hline
+    	   $\checkmark$ 	&  $\times$  	&   $\times$ 	& 0.116 	&  0.0943  \\ \hline
+    	   $\times$ 	&  $\checkmark$ 	&   $\checkmark$ 	& 0.0115 	&  0.0936  \\ \hline
+   	   $\times$ 	&  $\checkmark$ 	&   $\times$ 	& 0.748 	&  0.0967  \\ \hline
+    	   $\times$ 	&  $\times$  	&   $\checkmark$  	& 0.0117  	& 0.0936   \\ \hline
+\end{tabular}
+\caption{Results of different feature selections with corresponding mean-squared error between predicted and input signal and maximum cross correlation}
+\end{center}
+\end{table}
+
+This table REFERENCE HERE shows that 
+
   % Delete all this when real results are written up.
     %Our initial computations on the pixel-intensity data revealed, unsurprisingly,
   %that pixel intensity variation over time for a reasonably still video was not large.
@@ -188,7 +215,22 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
   
  \section{Conclusions}
  
+ \begin{itemize}
+
+  \item{We built a program to enable training of the data: the program could record a series of images and pulse oximeter readings for those images.} 
+  \item{Using a binned Fourier Transform, we could efficiently reduce the video data to a finite dimensional feature space and perform regression on it.}
+\item{Increasing the variety of features included in the video reduced our mean squared error in the linear regression, however the cross correlations were little affected.}
+\item{Plenty of further work can be done with this project on a more realistic time-scale. These are outlined below.}
+ \end{itemize}
+
  \section{Further Work}
+  Given the time contraint on this project, we feel we have made great progress.
+ However in order for the project to be considered successful, we have identified some areas where our methodology was non-ideal (due to time constraints or computational power).
+ \begin{itemize}
+ \item{The main limitation on our method is the autoencoding process used for discretizing the FT of the pulse oximeter signal. As can be seen in the graph INSERT GRAPH AND REFERENCE IT if we tried to reconstruct the original pulse ox signal with our compressed version, the compression is a lossy one. Given this lossiness in our compression}
+ \item{Another area for improvement}
+ 
+ \end{itemize}
  
   \bibliographystyle{unsrt} % Plain referencing style
 \bibliography{references_final_proj} % Use the example bibliography file sample.bib
