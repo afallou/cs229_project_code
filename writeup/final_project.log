@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  11 DEC 2013 22:18
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  11 DEC 2013 22:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -26,8 +26,7 @@ File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 (c:/texlive/2013/texmf-dist/tex/latex/etex-pkg/etex.sty
 Package: etex 1998/03/26 v2.0 eTeX basic definition package (PEB)
 \et@xins=\count87
-)
-(c:/texlive/2013/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
+) (./algorithm2e.sty
 Package: algorithm2e 2013/01/06 v5.00 algorithms environments
 \c@AlgoLine=\count88
 
@@ -36,8 +35,7 @@ Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 )
 (c:/texlive/2013/texmf-dist/tex/latex/tools/xspace.sty
 Package: xspace 2009/10/20 v1.13 Space after command names (DPC,MH)
-)
-(c:/texlive/2013/texmf-dist/tex/latex/relsize/relsize.sty
+) (./relsize.sty
 Package: relsize 2013/03/29 ver 4.1
 )
 ********************************************************
@@ -80,11 +78,10 @@ subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
 \c@algocf=\count91
 \algocf@algoframe=\box32
 \algocf@algobox=\box33
-) (c:/texlive/2013/texmf-dist/tex/latex/preprint/fullpage.sty
+) (./fullpage.sty
 Package: fullpage 1999/02/23 1.1 (PWD)
 \FP@margin=\skip59
-)
-(c:/texlive/2013/texmf-dist/tex/latex/enumitem/enumitem.sty
+) (./enumitem.sty
 Package: enumitem 2011/09/28 v3.5.2 Customized lists
 \enitkv@toks@=\toks14
 \labelindent=\skip60
@@ -926,7 +923,20 @@ Package: listings 2013/08/26 1.5b (Carsten Heinz)
 (c:/texlive/2013/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2013/08/26 1.5b listings language file
 )
-(./final_project.aux)
+(./final_project.aux
+
+LaTeX Warning: Label `figure:reconst' multiply defined.
+
+
+LaTeX Warning: Label `cref@figure:reconst' multiply defined.
+
+
+LaTeX Warning: Label `figure:reconst' multiply defined.
+
+
+LaTeX Warning: Label `cref@figure:reconst' multiply defined.
+
+)
 \openout1 = `final_project.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 94.
@@ -1086,34 +1096,45 @@ Underfull \hbox (badness 10000) in paragraph at lines 194--195
 
  []
 
-[4]
+[4] <images/fig1.png, id=65, 811.03pt x 760.8425pt>
+File: images/fig1.png Graphic file (type png)
+ <use images/fig1.png>
+Package pdftex.def Info: images/fig1.png used on input line 217.
+(pdftex.def)             Requested size: 433.62001pt x 406.7971pt.
 
-Package caption Warning: \label without proper \caption on input line 237.
+<images/fig3.png, id=66, 916.42375pt x 189.70876pt>
+File: images/fig3.png Graphic file (type png)
+ <use images/fig3.png>
+Package pdftex.def Info: images/fig3.png used on input line 223.
+(pdftex.def)             Requested size: 433.62001pt x 89.76233pt.
+
+
+Package caption Warning: \label without proper \caption on input line 247.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `figure:reconst' on page 5 undefined on input line 230
+LaTeX Warning: Reference `figure:reconst' on page 5 undefined on input line 240
 .
 
 
-Package caption Warning: \label without proper \caption on input line 243.
+Package caption Warning: \label without proper \caption on input line 253.
 See the caption package documentation for explanation.
 
 
-LaTeX Warning: Reference `figure:pred' on page 5 undefined on input line 230.
+LaTeX Warning: Reference `figure:pred' on page 5 undefined on input line 240.
 
-<images/reconst_signal.jpg, id=67, 722.7pt x 130.98938pt>
+<images/reconst_signal.jpg, id=69, 722.7pt x 130.98938pt>
 File: images/reconst_signal.jpg Graphic file (type jpg)
 
 <use images/reconst_signal.jpg>
-Package pdftex.def Info: images/reconst_signal.jpg used on input line 238.
+Package pdftex.def Info: images/reconst_signal.jpg used on input line 248.
 (pdftex.def)             Requested size: 433.62001pt x 78.59422pt.
 
-<images/actual_vs_pred_signal.jpg, id=68, 963.6pt x 370.38374pt>
+<images/actual_vs_pred_signal.jpg, id=70, 963.6pt x 370.38374pt>
 File: images/actual_vs_pred_signal.jpg Graphic file (type jpg)
 
 <use images/actual_vs_pred_signal.jpg>
-Package pdftex.def Info: images/actual_vs_pred_signal.jpg used on input line 24
+Package pdftex.def Info: images/actual_vs_pred_signal.jpg used on input line 25
 4.
 (pdftex.def)             Requested size: 433.62001pt x 166.67113pt.
  (./final_project.bbl
@@ -1121,26 +1142,29 @@ Package pdftex.def Info: images/actual_vs_pred_signal.jpg used on input line 24
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 252.
- [5] [6 <./images/reconst_signal.jpg> <./images/actual_vs_pred_signal.jpg>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 252.
-
-(./final_project.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 252.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 252.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 262.
+ [5] [6 <./images/fig1.png> <./images/fig3.png>] [7 <./images/reconst_signal.jp
+g> <./images/actual_vs_pred_signal.jpg>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 262.
+ (./final_project.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 262.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 262.
 Package rerunfilecheck Info: File `final_project.out' has not changed.
 (rerunfilecheck)             Checksum: 2EC1F6A68398B28DFA5D47825C3B29DF;287.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 252.
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 262.
  ) 
 Here is how much of TeX's memory you used:
- 24746 strings out of 493308
- 444900 string characters out of 6141366
+ 24755 strings out of 493308
+ 444564 string characters out of 6141366
  626862 words of memory out of 5000000
- 27739 multiletter control sequences out of 15000+600000
+ 27747 multiletter control sequences out of 15000+600000
  16569 words of font info for 63 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  56i,15n,92p,900b,553s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1153,10 +1177,10 @@ c/amsfonts/cm/cmr12.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmr17.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
 .pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/
 texlive/2013/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on final_project.pdf (6 pages, 213237 bytes).
+Output written on final_project.pdf (7 pages, 1293652 bytes).
 PDF statistics:
- 121 PDF objects out of 1000 (max. 8388607)
- 98 compressed objects within 1 object stream
- 23 named destinations out of 1000 (max. 500000)
- 81 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 133 PDF objects out of 1000 (max. 8388607)
+ 106 compressed objects within 2 object streams
+ 26 named destinations out of 1000 (max. 500000)
+ 91 words of extra memory for PDF output out of 10000 (max. 10000000)
 

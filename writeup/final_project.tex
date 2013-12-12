@@ -211,8 +211,18 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
 \end{table}
 
 These results suggest that each of the features, frequency, phase, and pixel location; play a role in the prediction. Furthermore, the least error was obtained when all three features were used (MSE =0.00884), followed by just frequency and pixel (MSE=0.00903), and pixel location (MSE=0.0117). As expected, for a single video, with numerous pixels serving as training examples, the residuals were low.
-
-  
+  \begin{figure}
+\captionsetup{justification=centering}
+\label{figure:reconst}
+\includegraphics[width=\textwidth]{images/fig1.png}
+\caption{The pre-processing steps}
+\end{figure}
+ \begin{figure}
+\captionsetup{justification=centering}
+\label{figure:reconst}
+\includegraphics[width=\textwidth]{images/fig3.png}
+\caption{Obtaining ground truth estimates from pulse oximeter values per image}
+\end{figure}
  \section{Conclusions}
  
  \begin{itemize}
@@ -246,7 +256,7 @@ These results suggest that each of the features, frequency, phase, and pixel loc
 \end{figure}
 
   \bibliographystyle{unsrt} % Plain referencing style
-\bibliography{references_final_proj} % Use the example bibliography file sample.bib
+\bibliography{references} %
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   \end{document}
