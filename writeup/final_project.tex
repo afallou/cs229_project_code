@@ -210,16 +210,8 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
 \end{center}
 \end{table}
 
-This table REFERENCE HERE shows that 
+These results suggest that each of the features, frequency, phase, and pixel location; play a role in the prediction. Furthermore, the least error was obtained when all three features were used (MSE =0.00884), followed by just frequency and pixel (MSE=0.00903), and pixel location (MSE=0.0117). As expected, for a single video, with numerous pixels serving as training examples, the residuals were low.
 
-  % Delete all this when real results are written up.
-    %Our initial computations on the pixel-intensity data revealed, unsurprisingly,
-  %that pixel intensity variation over time for a reasonably still video was not large.
-  %Often a single color channel for a pixel would have a range of 3 (when it could vary from 0-255) over the whole video, even if that pixel was contained in the face.
-  %The DFT of the data would produce large peaks at 0 Hz and would rapidly diminish in magnitude. Because of this, we have not had any significant linear regression results.
-  %A simple solution is to subtract a mean intensity value of our pixel, so as to increase the relative intensity variations over time.
-  %Ultimately, we may have to resort to using EVM-enhanced videos if our training data has signals that are too weak to pick up.
-  % ------------------------------------------------------------------
   
  \section{Conclusions}
  
@@ -227,19 +219,32 @@ This table REFERENCE HERE shows that
 
   \item{We built a program to enable training of the data: the program could record a series of images and pulse oximeter readings for those images.} 
   \item{Using a binned Fourier Transform, we could efficiently reduce the video data to a finite dimensional feature space and perform regression on it.}
-\item{Increasing the variety of features included in the video reduced our mean squared error in the linear regression, however the cross correlations were little affected.}
-\item{Plenty of further work can be done with this project on a more realistic time-scale. These are outlined below.}
+\item{Increasing the variety of features included in the video reduced our mean squared error in the linear regression.}
+
  \end{itemize}
 
  \section{Further Work}
   Given the time contraint on this project, we feel we have made great progress.
  However in order for the project to be considered successful, we have identified some areas where our methodology was non-ideal (due to time constraints or computational power).
  \begin{itemize}
- \item{The main limitation on our method is the autoencoding process used for discretizing the FT of the pulse oximeter signal. As can be seen in the graph INSERT GRAPH AND REFERENCE IT if we tried to reconstruct the original pulse ox signal with our compressed version, the compression is a lossy one. Given this lossiness in our compression}
- \item{Another area for improvement}
+ \item{The main limitation on our method is the autoencoding process used for discretizing the FT of the pulse oximeter signal. As can be seen in the ~\ref{figure:reconst} if we tried to reconstruct the original pulse ox signal with our compressed version, the compression is a lossy one. Given this lossiness in our compression our predicted signal \ref{figure:pred} has limits on its accuracy.}
+
  
  \end{itemize}
  
+ \begin{figure}
+\captionsetup{justification=centering}
+\label{figure:reconst}
+\includegraphics[width=\textwidth]{images/reconst_signal.jpg}
+\caption{The reconstructed signal in bold and the actual signal in grey}
+\end{figure}
+ \begin{figure}
+\captionsetup{justification=centering}
+\label{figure:pred}
+\includegraphics[width=\textwidth]{images/actual_vs_pred_signal.jpg}
+\caption{The predicted signal in bold and the actual signal in grey}
+\end{figure}
+
   \bibliographystyle{unsrt} % Plain referencing style
 \bibliography{references_final_proj} % Use the example bibliography file sample.bib
 
