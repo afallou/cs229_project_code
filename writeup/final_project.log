@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  11 DEC 2013 20:16
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/W32TeX) (format=pdflatex 2013.10.15)  11 DEC 2013 22:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1031,40 +1031,44 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 100.
 
 (c:/texlive/2013/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
+)
+Missing character: There is no â in font cmr10!
+Missing character: There is no € in font cmr10!
+Missing character: There is no ™ in font cmr10!
+ [1
 
 {c:/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 122.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 127.
 
 
 (c:/texlive/2013/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 122.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 127.
 
-<images/red_peak.png, id=43, 562.1pt x 380.42125pt>
+<images/red_peak.png, id=42, 562.1pt x 380.42125pt>
 File: images/red_peak.png Graphic file (type png)
  <use images/red_peak.png>
-Package pdftex.def Info: images/red_peak.png used on input line 132.
+Package pdftex.def Info: images/red_peak.png used on input line 137.
 (pdftex.def)             Requested size: 216.81pt x 146.73254pt.
 
-<images/red_trough.png, id=44, 562.1pt x 380.42125pt>
+<images/red_trough.png, id=43, 562.1pt x 380.42125pt>
 File: images/red_trough.png Graphic file (type png)
 
 <use images/red_trough.png>
-Package pdftex.def Info: images/red_trough.png used on input line 137.
+Package pdftex.def Info: images/red_trough.png used on input line 142.
 (pdftex.def)             Requested size: 216.81pt x 146.73254pt.
 
-Overfull \hbox (2.61107pt too wide) in paragraph at lines 130--141
+Overfull \hbox (2.61107pt too wide) in paragraph at lines 135--146
 []$[]$ $[]$ 
  []
 
+[2]
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
-[2 <./images/red_peak.png (PNG copy)> <./images/red_trough.png (PNG copy)>]
-[3]
+ [3 <./images/red_peak.png (PNG copy)> <./images/red_trough.png (PNG copy)>]
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ™ in font cmr10!
@@ -1078,7 +1082,7 @@ Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ¦ in font cmr10!
 
-Underfull \hbox (badness 10000) in paragraph at lines 189--190
+Underfull \hbox (badness 10000) in paragraph at lines 194--195
 
  []
 
@@ -1087,39 +1091,37 @@ Underfull \hbox (badness 10000) in paragraph at lines 189--190
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 242.
- [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 242.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 247.
+ [5] [6]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 247.
  (./final_project.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 242.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 242.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 247.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 247.
 Package rerunfilecheck Info: File `final_project.out' has not changed.
-(rerunfilecheck)             Checksum: 57851C835C1E3AEFD2B15FC0F1ABB8D1;240.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 242.
+(rerunfilecheck)             Checksum: 2EC1F6A68398B28DFA5D47825C3B29DF;287.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 247.
  ) 
 Here is how much of TeX's memory you used:
- 24728 strings out of 493308
- 444481 string characters out of 6141366
+ 24729 strings out of 493308
+ 444486 string characters out of 6141366
  625862 words of memory out of 5000000
- 27726 multiletter control sequences out of 15000+600000
+ 27727 multiletter control sequences out of 15000+600000
  16569 words of font info for 63 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 56i,15n,92p,911b,553s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 56i,15n,92p,900b,553s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/tex
 live/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2013
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2013/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2013/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2013/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmr12.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr17.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.p
-fb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texl
-ive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2013/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2013/texmf-dis
-t/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on final_project.pdf (5 pages, 157049 bytes).
+/cm/cmr17.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
+.pfb><c:/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/
+texlive/2013/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on final_project.pdf (6 pages, 144891 bytes).
 PDF statistics:
- 118 PDF objects out of 1000 (max. 8388607)
- 96 compressed objects within 1 object stream
+ 115 PDF objects out of 1000 (max. 8388607)
+ 94 compressed objects within 1 object stream
  21 named destinations out of 1000 (max. 500000)
- 63 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 71 words of extra memory for PDF output out of 10000 (max. 10000000)
 
