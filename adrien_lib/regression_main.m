@@ -32,4 +32,4 @@ parfor i = 1:total_pixel_count
 	feature_vectors(i, :) = [binarized_video(i, :, 1), binarized_video(i, :, 2), binarized_video(i, :, 3)];
 end
 
-binned_pulseox = binned_feature_vectors(abs(fft(pulseox_resampled)), THRESHOLD_PULSEOX, BINS_COUNT);
+binned_pulseox = binned_feature_vectors(fft(pulseox_resampled), THRESHOLD_PULSEOX, BINS_COUNT);

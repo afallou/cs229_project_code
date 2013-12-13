@@ -376,15 +376,15 @@ create_formula = function(f_pix, f_phase, f_fq){
 # import, preprocess, plot
 
 # test case
-sample_data = generate_sample_data(c(50, 120), c(.7, 1), c(1,1))
-plot_resampled_fft_peaks(sample_data, 1, 5, 'none')
+# sample_data = generate_sample_data(c(50, 120), c(.7, 1), c(1,1))
+# plot_resampled_fft_peaks(sample_data, 1, 5, 'none')
 
-pulseox_data = import_pulseox_data()
-plot_resampled_fft_peaks(pulseox_data, 1, .1, 'lowess')
+# pulseox_data = import_pulseox_data()
+# plot_resampled_fft_peaks(pulseox_data, 1, .1, 'lowess')
 
-plot_resampled_fft_peaks(pulseox_data, .1, .05, 'lowess')
-plot_resampled_fft_peaks(pulseox_data, .01, .05, 'lowess')
-plot_resampled_fft_peaks(pulseox_data, .01, .05, 'none')
+# plot_resampled_fft_peaks(pulseox_data, .1, .05, 'lowess')
+# plot_resampled_fft_peaks(pulseox_data, .01, .05, 'lowess')
+# plot_resampled_fft_peaks(pulseox_data, .01, .05, 'none')
 
 # ---------------------------------------------------------------------------------------
 # image libraries

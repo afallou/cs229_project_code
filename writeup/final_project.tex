@@ -108,6 +108,7 @@ In both developing and developed countries, reducing the cost of medical care is
 \section{Introduction}
 %
 \small  
+
 Cardiovascular health is the \emph{sin qua non} of human life. Early detection of cardiovascular disease is of paramount importance in public health. This project aims to develop a method to visualize the perfusion of blood through the skin via pulse oximetry. Pulse oximetry is a technique that exploits the fact that oxygenated and deoxygenated hemoglobin changes the color of red blood cells. The technique maps these changes in rgb color of the visible skin to the invisible presence of oxygenated vs deoxygenated blood in the local vasculature underneath the skin.
 
 Our goal was to develop a process to obtain the SpO2 signal from an ordinary webcam. However, this imaging modality (webcam) is not designed to detect SpO2, and thus our signal of interest is weak and noisy. Furthermore, ordinary webcams have limited spatial, temporal, and color resolution, that may be unable to detect the subtle changes in color necessary for accurate pulse oximetry. Finally, factors outside the webcam’s limitations, including between-subject variations in skin pigmentation and lighting conditions, introduce noise to the signal acquisition process. To overcome these obstacles, we focused on engineering rich features that could be used in standard learning models. The learning task was therefore to learn which combination of features best represented the weak pulse oximetry signal.
@@ -172,11 +173,17 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
   Pulse oximeter data was collected using an Arduino and a Pulse Oximeter connected to a laptop. 
   A program was written that started recording the pulse ox data and simultaneously started taking pictures every 50-80 ms on a webcam.
   This gave the pulse ox data corresponding to the image/video data.
-  Thus we had many images taken over small time intervals with a corresponding pulse oximeter values.
-  \\
+  Thus we had many images taken over small time intervals with a corresponding pulse oximeter values (Figure~\ref{figure:images_and_pulseox}).
+
+  \begin{figure}
+    \captionsetup{justification=centering}
+    \includegraphics[width=\textwidth]{images/fig3.png}
+    \caption{Obtaining ground truth estimates from pulse oximeter values per image \label{figure:images_and_pulseox}}
+  \end{figure}
+
   Further processing had to be done because the pictures were not taken uniformly in time and so computing a fourier decomposition of the pixels taken from each image would not be correct.
   An interpolation was needed for images (to create a set of images with uniform time between them) and also for the pulse oximeter data to corroborate with the images.
-  \\
+
   In order to accurately train our model, we also needed to bin the pulse oximeter values and be able to recreate the signal from the binned values so that they remained true to life.
   
   
@@ -184,8 +191,15 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
 
 \section{Results and Discussion}
  \subsection*{Initial results}
-  At first we took 10 bins over a 6Hz interval of the Fourier transform of each pixel. We outputted a binary vector, with a 1 if the binned value exceeded a threshold and a 0 otherwise. The binning involved with our initial results provided a coarse model and was in fact a very poor representation of the data. In particular, for each pixel the binary vector consisted of [1, 0, 0 ..., 0] which is exactly the same distribution we would expect for noise. Thus our weight matrix contained predominantly zeroes, as we were training to a predominantly zero vector. \\
-  To make our predictions closer to the ground truth, we increased the bin size, although limitations in our computational power meant that we were restricted to maximum 24 bins over the 6Hz interval. This applied to both the pulse oximeter value and the pixel's Fourier transforms. We also included the phase terms and the pixel locations as further features.
+  At first we took 10 bins over a 6Hz interval of the Fourier transform of each pixel. We outputted a binary vector, with a 1 if the binned value exceeded a threshold and a 0 otherwise. The binning involved with our initial results provided a coarse model and was in fact a very poor representation of the data. In particular, for each pixel the binary vector consisted of [1, 0, 0 ..., 0] which is exactly the same distribution we would expect for noise. Thus our weight matrix contained predominantly zeroes, as we were training to a predominantly zero vector.
+
+  To make our predictions closer to the ground truth, we increased the bin size, although limitations in our computational power meant that we were restricted to maximum 24 bins over the 6Hz interval. This applied to both the pulse oximeter value and the pixel's Fourier transforms. We also included the phase terms and the pixel locations as further features (Figure~\ref{figure:preprocessing}).
+
+  \begin{figure}
+    \captionsetup{justification=centering}
+    \includegraphics[width=\textwidth]{images/fig1.png}
+    \caption{The pre-processing steps \label{figure:preprocessing}}
+  \end{figure}
   
  \subsection*{Using the normal equations}
  Our feature matrix, \(X\), which contained the features for every training example, gave a matrix $X^TX$ with a very high condition number. This meant the normal equations were unusuable and so stochastic gradient descent was used.
@@ -211,18 +225,8 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
 \end{table}
 
 These results suggest that each of the features, frequency, phase, and pixel location; play a role in the prediction. Furthermore, the least error was obtained when all three features were used (MSE =0.00884), followed by just frequency and pixel (MSE=0.00903), and pixel location (MSE=0.0117). As expected, for a single video, with numerous pixels serving as training examples, the residuals were low.
-  \begin{figure}
-\captionsetup{justification=centering}
-\label{figure:reconst}
-\includegraphics[width=\textwidth]{images/fig1.png}
-\caption{The pre-processing steps}
-\end{figure}
- \begin{figure}
-\captionsetup{justification=centering}
-\label{figure:reconst}
-\includegraphics[width=\textwidth]{images/fig3.png}
-\caption{Obtaining ground truth estimates from pulse oximeter values per image}
-\end{figure}
+  
+
  \section{Conclusions}
  
  \begin{itemize}
@@ -237,22 +241,20 @@ These results suggest that each of the features, frequency, phase, and pixel loc
   Given the time contraint on this project, we feel we have made great progress.
  However in order for the project to be considered successful, we have identified some areas where our methodology was non-ideal (due to time constraints or computational power).
  \begin{itemize}
- \item{The main limitation on our method is the autoencoding process used for discretizing the FT of the pulse oximeter signal. As can be seen in the ~\ref{figure:reconst} if we tried to reconstruct the original pulse ox signal with our compressed version, the compression is a lossy one. Given this lossiness in our compression our predicted signal \ref{figure:pred} has limits on its accuracy.}
+ \item{The main limitation on our method is the autoencoding process used for discretizing the FT of the pulse oximeter signal. As can be seen in Figure~\ref{figure:reconst} if we tried to reconstruct the original pulse ox signal with our compressed version, the compression is a lossy one. Given this lossiness in our compression our predicted signal (Figure~\ref{figure:pred}) has limits on its accuracy.}
 
  
  \end{itemize}
  
  \begin{figure}
 \captionsetup{justification=centering}
-\label{figure:reconst}
 \includegraphics[width=\textwidth]{images/reconst_signal.jpg}
-\caption{The reconstructed signal in bold and the actual signal in grey}
+\caption{The reconstructed signal in bold and the actual signal in grey \label{figure:reconst}}
 \end{figure}
  \begin{figure}
 \captionsetup{justification=centering}
-\label{figure:pred}
 \includegraphics[width=\textwidth]{images/actual_vs_pred_signal.jpg}
-\caption{The predicted signal in bold and the actual signal in grey}
+\caption{The predicted signal in bold and the actual signal in grey \label{figure:pred}}
 \end{figure}
 
   \bibliographystyle{unsrt} % Plain referencing style
