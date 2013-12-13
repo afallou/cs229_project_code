@@ -56,6 +56,7 @@
 \renewcommand{\arraystretch}{1.2}
 % big-O notation
 \newcommand{\bigO}[1]{\ensuremath{\mathop{}\mathopen{}\mathcal{O}\mathopen{}\left(#1\right)}}
+\setlength{\headsep}{0.2in}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -93,14 +94,22 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
-  \title{CS 229 Project report: Extracting vital signs from video}
-  \author{D.Deriso, N. Banerjee, A. Fallou}
-  \date{\today}
-  \maketitle
-  \thispagestyle{empty}
+  % \title{CS 229 Project report: Extracting vital signs from video}
+  % \author{}
+  % \date{\today}
+  % \maketitle
+  % \thispagestyle{empty}
+ \centerline{\Large \bf CS 229 Project report: Extracting vital signs from video} %% Paper title
+
+ \medskip
+
+ \centerline{D.Deriso, N. Banerjee, A. Fallou}
+      %% Author name(s)
+ \bigskip
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{plain}
 \begin{abstract}
-In both developing and developed countries, reducing the cost of medical care is a primary goal of science and government. In this project we seek to find and extract information from a video of a human that tells us the pulse rate and the oxygen level of the blood. We therefore aim to create a virtual pulse oximeter: the ultimate non-invasive, equipment-free medical diagnostics tool, which could be deployed to anyone with video recording capabilities. Features were chosen to be related to the three color channel intensity values, with the idea that changing color of the video would relate to blood flow around the body. Extensive pre-processing was required on both the video data and the pulse oximeter data to enable training. Early results showed that feature selection was vital in reducing the mean-squared error of the output, but plenty of further work can be done.
+In both developing and developed countries, reducing the cost of medical care is a primary goal of science and government. In this project we seek to find and extract information from a video of a human that tells us the pulse rate and the oxygen level of the blood, with the eventual aim to create a virtual pulse oximeter. Features to be extracted were chosen to be related to the three color channel intensity values, with the idea that changing color of the video would relate to blood flow around the body. Extensive pre-processing was required on both the video data and the pulse oximeter data to enable training. Early results showed that feature selection was vital in reducing the mean-squared error of the output. At the end of this report, we outline further work to be done.
 
 \end{abstract}
 
@@ -109,57 +118,17 @@ In both developing and developed countries, reducing the cost of medical care is
 %
 \small  
 
-Cardiovascular health is the \emph{sin qua non} of human life. Early detection of cardiovascular disease is of paramount importance in public health. This project aims to develop a method to visualize the perfusion of blood through the skin via pulse oximetry. Pulse oximetry is a technique that exploits the fact that oxygenated and deoxygenated hemoglobin changes the color of red blood cells. The technique maps these changes in rgb color of the visible skin to the invisible presence of oxygenated vs deoxygenated blood in the local vasculature underneath the skin.
+Cardiovascular health is the \emph{sin qua non} of human life. Early detection of cardiovascular disease is of paramount importance in public health. This project aims to develop a method to visualize the perfusion of blood through the skin via pulse oximetry. Pulse oximetry is a technique that exploits the fact that oxygenated and deoxygenated hemoglobin changes the color of red blood cells. The technique maps these changes in RGB color of the visible skin to the invisible presence of oxygenated vs deoxygenated blood in the local vasculature underneath the skin.
 
-Our goal was to develop a process to obtain the SpO2 signal from an ordinary webcam. However, this imaging modality (webcam) is not designed to detect SpO2, and thus our signal of interest is weak and noisy. Furthermore, ordinary webcams have limited spatial, temporal, and color resolution, that may be unable to detect the subtle changes in color necessary for accurate pulse oximetry. Finally, factors outside the webcam’s limitations, including between-subject variations in skin pigmentation and lighting conditions, introduce noise to the signal acquisition process. To overcome these obstacles, we focused on engineering rich features that could be used in standard learning models. The learning task was therefore to learn which combination of features best represented the weak pulse oximetry signal.
+Our goal was to develop a process to obtain the pulse oximeter (SpO2) signal from an ordinary webcam. Ordinary webcams have limited spatial, temporal, and color resolution, that may make it difficult to detect the subtle changes in color necessary for accurate pulse oximetry. Furthermore, factors outside the webcam’s limitations, including between-subject variations in skin pigmentation and lighting conditions, introduce noise to the signal acquisition process. To overcome these obstacles, we focused on engineering rich features that could be used in standard learning models. The task was therefore to learn which combination of features best represented the weak pulse oximetry signal.
 
-A paper [1] by Wu et al detailed a process known as 'Eulerian Video Magnification'(EVM) whereby previously imperceptible signals were amplified such that they became visible to the naked eye. For example by amplifying the red color channel in a 0.6-1.1Hz band, EVM allows seeing the periodic blood flow on the face of a person in the frame. The processing steps are summarized below in the methods.
+\section{Eulerian Video Magnification}
+
+A paper~\cite{Wu12Eulerian} by Wu et al detailed a process known as 'Eulerian Video Magnification'(EVM) whereby previously imperceptible signals were amplified such that they became visible to the naked eye. For example by amplifying the red color channel in a 0.6-1.1Hz band, EVM allows seeing the periodic blood flow on the face of a person in the frame. The processing steps are summarized below in the methods.
 
 However, potential issues appeared when performing EVM on our own videos. We had time-periodic artefacts showing color fluctuations in unexpected regions. For example, part of the ceiling in the video would show a pulsating red color change at the frequency of the person's heart rate. Our pursuit of optimal features led us to extract the most relevant aspects of their pipeline, which included frequency selection and parallel treatments of different color channels. Moreover, the EVM process stipulates that the parameters for the color amplification had to be pre-determined, and we believed that would not play out well with our goal of being robust to lighting conditions and camera settings. We therefore wanted to relax the process such that those parameters did not need to be set manually.
 
 The EVM code provided convincing evidence that there exists information in a video from which a pulse signal can be extracted. We therefore decided to base our feature extraction techniques on those used in EVM. Further down the line, we hope to incorporate EVM more substantially into the project. We aim to map out the blood flow across the whole human body by amplifying the right color frequencies. Furthermore, we could use the spatial amplification of the EVM to show the physical motion of the skin as blood travels under it; the potential impact of early identification of poor blood circulation is large.
-
-
-\section{Methods}
-
-Previous work on Eulerian Video Magnification (EVM), has led to the following processing pipeline, which we later modify for our purpose. The video can undergo different treatments, but the central goal is to amplify spatial or temporal changes that are normally invisible to the naked eye. The process can be summarized as:
-
-\begin{itemize}
-\item Separate the video into distinct spatial frequency bands by performing a 2D spatial fourier decomposition. 
-\item For each spatial frequency band, blur and downsample several times using Gaussian or Laplacian Pyramids. The first step preserves spatial features (e.g. high frequencies such as edges) through this destructive process.
-\item Amplify a pre-selected temporal frequency band.
-\item Recombine spatial frequencies from step 1, and add the amplified video to the original video.
-\end{itemize}
-Figure 1 presents an example for the output of the next-to-last-step. 
-
-\begin{figure}
-\begin{subfigure}{.5\textwidth}
-\captionsetup{justification=centering}
-\includegraphics[width=\textwidth]{images/red_peak.png}
-\caption{At at a given time}
-\end{subfigure}
-\begin{subfigure}{.5\textwidth}
-\captionsetup{justification=centering}
-\includegraphics[width=\textwidth]{images/red_trough.png}
-\caption{Half a heartbeat period later}
-\end{subfigure}
-\captionsetup{justification=centering}
-\caption{Red channel of the EVM output, before recombining with the original video.}
-\end{figure}
-
-Strikingly, these two frames showed that the whole video undergoes a periodic color change with a frequency that seems equal to the heartbeat. This did not happen with the data provided in the paper, where in a similar video only the person's face changes color.
-To extract features relevant to pulse oximetery, we seek out a weighted combination of periodic changes in color space that best reconstruct our training pulse oximetery signal. We therefore undergo the following process:
-
-\begin{itemize}
-\item Extract each pixel’s time course from the video. 
-\item For each pixel, separate the colors into R, G, B bands and perform a fourier decomposition where frequency is grouped into n bins.
-\item Learn weights via linear regression for frequencies within each color band to reproduce the simultaneously recorded pulse oximeter data in the training data set. 
-\item Amplify the temporal frequencies according to the weights of the regression.
-\item Combine the amplified video with the original video.
-\end{itemize}
-
-
-  
 
 
 \section{Preprocessing}
@@ -167,7 +136,8 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
   We needed to find a way to convert a video into features.
   Our feature set initially started out vaguely; we wanted to incorporate the frequency data inherent within each pixel in the video and output frequency data about a pulse oximeter waveform.
   The three color channel intensity values through time, \(I_R(t), I_G(t), I_B(t)\) were our starting points.
-  We converted the video into a four dimensional matrix of pixel location x and y, color channel and time and performed the descontruction mentioned in the previous section.
+  We converted the video into a four dimensional matrix of pixel location x and y, color channel and time and performed a Fourier transform of the time course of each pixel.
+  This FT was then binned to reduce the dimensionality of the features.
   
 \subsection*{Pulse Oximeter Data}
   Pulse oximeter data was collected using an Arduino and a Pulse Oximeter connected to a laptop. 
@@ -193,15 +163,14 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
  \subsection*{Initial results}
   At first we took 10 bins over a 6Hz interval of the Fourier transform of each pixel. We outputted a binary vector, with a 1 if the binned value exceeded a threshold and a 0 otherwise. The binning involved with our initial results provided a coarse model and was in fact a very poor representation of the data. In particular, for each pixel the binary vector consisted of [1, 0, 0 ..., 0] which is exactly the same distribution we would expect for noise. Thus our weight matrix contained predominantly zeroes, as we were training to a predominantly zero vector.
 
-  To make our predictions closer to the ground truth, we increased the bin size, although limitations in our computational power meant that we were restricted to maximum 24 bins over the 6Hz interval. This applied to both the pulse oximeter value and the pixel's Fourier transforms. We also included the phase terms and the pixel locations as further features (Figure~\ref{figure:preprocessing}).
+  To make our predictions closer to the ground truth, we increased the number of bins, although limitations in our computational power meant that we were restricted to maximum 24 bins over the 6Hz interval. This applied to both the pulse oximeter value and the pixel's Fourier transforms. We also included the phase terms and the pixel locations as further features (Figure~\ref{figure:preprocessing}).
 
-  \begin{figure}
+  \begin{figure}[tb]
     \captionsetup{justification=centering}
     \includegraphics[width=\textwidth]{images/fig1.png}
     \caption{The pre-processing steps \label{figure:preprocessing}}
   \end{figure}
   
- \subsection*{Using the normal equations}
  Our feature matrix, \(X\), which contained the features for every training example, gave a matrix $X^TX$ with a very high condition number. This meant the normal equations were unusuable and so stochastic gradient descent was used.
  
  \subsection*{Results}
@@ -212,13 +181,13 @@ To extract features relevant to pulse oximetery, we seek out a weighted combinat
 \begin{tabular}{|c|c|c|c|c|} 
  \hline
       	\text{Pixel location} & \text{Phase} & 	\text{Frequency} & 	\text{MSE} &  \text{Max cross correlation}  \\ \hline
-    	  $\checkmark$ 	&  $\checkmark$ 	&   $\checkmark$ 	& 0.00884 	&  0.0936  \\ \hline
-    	   $\checkmark$ 	&  $\checkmark$ 	&   $\times$  	& 0.114 	&  0.0943  \\ \hline
-    	   $\checkmark$ 	&  $\times$ 	&   $\checkmark$ 	& 0.00903 	&  0.0936  \\ \hline
-    	   $\checkmark$ 	&  $\times$  	&   $\times$ 	& 0.116 	&  0.0943  \\ \hline
-    	   $\times$ 	&  $\checkmark$ 	&   $\checkmark$ 	& 0.0115 	&  0.0936  \\ \hline
-   	   $\times$ 	&  $\checkmark$ 	&   $\times$ 	& 0.748 	&  0.0967  \\ \hline
-    	   $\times$ 	&  $\times$  	&   $\checkmark$  	& 0.0117  	& 0.0936   \\ \hline
+    	  $\checkmark$ 	&  $\checkmark$ 	&   $\checkmark$ 	& 0.0088 	&  0.0936  \\ \hline
+    	   $\checkmark$ 	&  $\checkmark$ 	&   $\times$  	& 0.11 	&  0.0943  \\ \hline
+    	   $\checkmark$ 	&  $\times$ 	&   $\checkmark$ 	& 0.0090 	&  0.0936  \\ \hline
+    	   $\checkmark$ 	&  $\times$  	&   $\times$ 	& 0.12 	&  0.0943  \\ \hline
+    	   $\times$ 	&  $\checkmark$ 	&   $\checkmark$ 	& 0.012 	&  0.0936  \\ \hline
+   	   $\times$ 	&  $\checkmark$ 	&   $\times$ 	& 0.75 	&  0.0967  \\ \hline
+    	   $\times$ 	&  $\times$  	&   $\checkmark$  	& 0.012  	& 0.0936   \\ \hline
 \end{tabular}
 \caption{Results of different feature selections with corresponding mean-squared error between predicted and input signal and maximum cross correlation}
 \end{center}
@@ -237,25 +206,16 @@ These results suggest that each of the features, frequency, phase, and pixel loc
 
  \end{itemize}
 
- \section{Further Work}
-  Given the time contraint on this project, we feel we have made great progress.
- However in order for the project to be considered successful, we have identified some areas where our methodology was non-ideal (due to time constraints or computational power).
- \begin{itemize}
- \item{The main limitation on our method is the autoencoding process used for discretizing the FT of the pulse oximeter signal. As can be seen in Figure~\ref{figure:reconst} if we tried to reconstruct the original pulse ox signal with our compressed version, the compression is a lossy one. Given this lossiness in our compression our predicted signal (Figure~\ref{figure:pred}) has limits on its accuracy.}
-
- 
- \end{itemize}
- 
  \begin{figure}
-\captionsetup{justification=centering}
-\includegraphics[width=\textwidth]{images/reconst_signal.jpg}
-\caption{The reconstructed signal in bold and the actual signal in grey \label{figure:reconst}}
-\end{figure}
- \begin{figure}
-\captionsetup{justification=centering}
+\captionsetup{justification=raggedright}
 \includegraphics[width=\textwidth]{images/actual_vs_pred_signal.jpg}
 \caption{The predicted signal in bold and the actual signal in grey \label{figure:pred}}
 \end{figure}
+
+ \section{Further Work}
+ In order for the project to be considered successful, we have identified an area where our methodology was non-ideal (due to time constraints or computational power).
+The main limitation on our method is the autoencoding process used for discretizing the FT of the pulse oximeter signal. As can be seen in Figure~\ref{figure:preprocessing} (bottom graph) when trying to reconstruct the original pulse ox signal with our compressed version, we lose information. Given this lossiness in our compression our predicted signal (Figure~\ref{figure:pred}) has limits on its accuracy.
+
 
   \bibliographystyle{unsrt} % Plain referencing style
 \bibliography{references} %
